@@ -1,6 +1,5 @@
 #include QMK_KEYBOARD_H
 
-
 // This keymap uses home row mods. In addition to mods, I have home row
 // layer-tap keys for the SYM layer. The key arrangement is a variation on
 // "GASC-order" home row mods:
@@ -14,28 +13,24 @@
 //
 
 // Home row mods for Colemak-dh layer.
-#define HOME_A  LT(_SYMBOL, KC_A)
 #define HOME_R  LALT_T(KC_R)
 #define HOME_S  LSFT_T(KC_S)
 #define HOME_T  LCTL_T(KC_T)
 #define HOME_N  RCTL_T(KC_N)
 #define HOME_E  RSFT_T(KC_E)
 #define HOME_I  LALT_T(KC_I)
-#define HOME_O  LT(_SYMBOL, KC_O)
 #define HOME_Z  LGUI_T(KC_Z)
 #define HOME_X  RALT_T(KC_X)
 #define HOME_DOT  RALT_T(KC_DOT)	
 #define HOME_SLSH  RGUI_T(KC_SLSH)	
 
 // Home row mods for QWERTY layer.
-#define QHOME_A LT(_SYMBOL, KC_A)
 #define QHOME_S LALT_T(KC_S)
 #define QHOME_D LSFT_T(KC_D)
 #define QHOME_F LCTL_T(KC_F)
 #define QHOME_J RCTL_T(KC_J)
 #define QHOME_K RSFT_T(KC_K)
 #define QHOME_L LALT_T(KC_L)
-#define QHOME_SC LT(_SYMBOL, KC_SCLN)
 #define QHOME_Z  LGUI_T(KC_Z)
 #define QHOME_X  RALT_T(KC_X)
 #define QHOME_DOT  RALT_T(KC_DOT)
@@ -44,10 +39,10 @@
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _COLEMAK_DH,
-    _NAVIGATION,
+    _NAV,
     _QWERTY,
-    _SYMBOL,
-    _NUMBER,
+    _SYM,
+    _NUM,
 };
 
 enum custom_keycodes {
@@ -84,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_QWERTY] = LAYOUT(
   KC_COLEMAK,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_GRV,
   KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSPC,
-  KC_TAB,   QHOME_A,   QHOME_S,    QHOME_D,    QHOME_F,    KC_G,                     KC_H,    QHOME_J,    QHOME_K,    QHOME_L, QHOME_SC,  KC_QUOT,
+  KC_TAB,   KC_A,   QHOME_S,    QHOME_D,    QHOME_F,    KC_G,                     KC_H,    QHOME_J,    QHOME_K,    QHOME_L, KC_SCLN,  KC_QUOT,
   KC_LSFT,  QHOME_Z,   QHOME_X,    KC_C,    KC_B,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  QHOME_DOT, QHOME_SLSH,  KC_RSFT,
                  KC_LGUI,KC_LALT,KC_LCTRL, XXXXXXX, KC_ENT,      KC_SPC,  XXXXXXX, KC_RCTRL, KC_RALT, KC_RGUI
 ),
@@ -93,23 +88,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  |  F10 | F11  | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | ESC  |   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   ;  | Bspc |
+ * |QWERTY|   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   ;  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | TAB  |   A  |  R/◆ |  S/⇧ | T/⎈  |   G  |-------.    ,-------|   M  | N/⎈  | E/⇧  | I/◆  |   O  |  '   |
+ * | ESC  |   A  |  R/◆ |  S/⇧ | T/⎈  |   G  |-------.    ,-------|   M  | N/⎈  | E/⇧  | I/◆  |   O  |  '   |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |LShift| Z/⎇  |  X/◆ |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  |RShift|
+ * |      | Z/⎇  |  X/◆ |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  | ./◆  | //⎇  |  _   |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            |      |      |      |  SYM | /Enter  /       \Space \  |  NAV |      |      |      |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
+ *            |      |      |SWITCH|  SYM | / BSPC  /       \Space \  |  NAV | CAPS |      |      |
+ *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
+ *            `-----------------------------------'           '------''---------------------------'
  */
 
 [_COLEMAK_DH] = LAYOUT(
-  KC_QWERTY,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                      KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_GRV,
-  KC_ESC,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                      KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  KC_BSPC,
-  KC_TAB,   HOME_A,   HOME_R,    HOME_S,    HOME_T,    KC_G,                      KC_M,    HOME_N,    HOME_E,    HOME_I,    HOME_O,  KC_QUOT,
-  KC_LSFT,  HOME_Z,   HOME_X,    KC_C,    KC_D,    KC_V, KC_MUTE,      XXXXXXX,KC_K,    KC_H, KC_COMM,  HOME_DOT, HOME_SLSH,  KC_RSFT,
-                 KC_LGUI,KC_LALT,KC_LCTRL,XXXXXXX, KC_ENT,      KC_SPC,  XXXXXXX, KC_RCTRL, KC_RALT, KC_RGUI
+  KC_F1,   KC_F2,   KC_F3,    KC_F4,    KC_F5,    KC_F6,                      KC_F7,    KC_F8,    KC_F9,    KC_F10,    KC_F11,  KC_F12,
+  KC_QWERTY,   KC_Q,   KC_W,    KC_F,    KC_P,    KC_B,                      KC_J,    KC_L,    KC_U,    KC_Y, KC_SCLN,  XXXXXXX,
+  KC_ESC,   KC_A,   HOME_R,    HOME_S,    HOME_T,    KC_G,                      KC_M,    HOME_N,    HOME_E,    HOME_I,    KC_O,  KC_QUOT,
+  XXXXXXX,  HOME_Z,   HOME_X,    KC_C,    KC_D,    KC_V, KC_MUTE,      XXXXXXX,KC_K,    KC_H, KC_COMM,  HOME_DOT, HOME_SLSH,  KC_UNDS,
+                 XXXXXXX, XXXXXXX, XXXXXXX, MO(_SYM), KC_BSPC,      KC_SPC,  LT(_NAV, KC_ENT), XXXXXXX, XXXXXXX, XXXXXXX
 ),
 /*
  * _SYMBOL
@@ -127,34 +122,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            `----------------------------------'           '------''---------------------------'
  */
 
-[_SYMBOL] = LAYOUT(
-  _______, _______, _______,  _______,    _______,    _______,                      _______,    _______,    _______,    _______,    _______,  _______,
-  KC_ESC,   KC_QUOT,   KC_LABK,    KC_RABK,    KC_DQUO,    KC_DOT,                      KC_AMPR,    KC_UNDERSCORE,    KC_RBRC,    KC_LBRC, KC_PERC,  _______,
-  KC_TAB,   KC_EXLM,   KC_MINS,    KC_PLUS,    KC_EQL,    KC_HASH,                      KC_PIPE,    KC_COLON,    KC_LPRN,    KC_RPRN,    KC_QUES,  _______,
-  KC_LSFT,  KC_CIRC,   KC_SLSH,    KC_ASTR,    KC_BSLS,   _______, KC_MUTE,      XXXXXXX, KC_TILD,    KC_DLR, KC_LCBR,  KC_RCBR, KC_AT,  _______,
-                 KC_LGUI,KC_LALT,KC_LCTRL,XXXXXXX, KC_ENT,      KC_SPC,  XXXXXXX, KC_RCTRL, KC_RALT, KC_RGUI
+[_SYM] = LAYOUT(
+  XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,    XXXXXXX,    XXXXXXX,                      XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,    XXXXXXX,  XXXXXXX,
+  KC_ESC,   KC_QUOT,   KC_LABK,    KC_RABK,    KC_DQUO,    KC_DOT,                      KC_AMPR,    KC_UNDERSCORE,    KC_RBRC,    KC_LBRC, KC_PERC,  XXXXXXX,
+  KC_TAB,   KC_EXLM,   KC_MINS,    KC_PLUS,    KC_EQL,    KC_HASH,                      KC_PIPE,    KC_COLON,    KC_LPRN,    KC_RPRN,    KC_QUES,  XXXXXXX,
+  KC_LSFT,  KC_CIRC,   KC_SLSH,    KC_ASTR,    KC_BSLS,   XXXXXXX, KC_MUTE,      XXXXXXX, KC_TILD,    KC_DLR, KC_LCBR,  KC_RCBR, KC_AT,  XXXXXXX,
+                 XXXXXXX, XXXXXXX, XXXXXXX, _______, KC_ENT,      KC_SPC,  _______, XXXXXXX, XXXXXXX, XXXXXXX 
 ),
 /* NAVIGATION
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |  F1  |  F2  |  F3  |  F4  |  F5  |                    |  F6  |  F7  |  F8  |  F9  | F10  | F11  |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  `   |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  | F12  |
+ * |      |      |      |      |      |      |                    |      |      | Home |  End |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | Tab  |   !  |   @  |   #  |   $  |   %  |-------.    ,-------|   ^  |   &  |   *  |   (  |   )  |   |  |
+ * |      |      | LAlt |LShift| LCTR |      |-------.    ,-------|      | LEFT | DOWN |  UP  | RIGHT|      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * | Shift|  =   |  -   |  +   |   {  |   }  |-------|    |-------|   [  |   ]  |   ;  |   :  |   \  | Shift|
+ * |      | LGUI | RAlt |      |      |      |-------|    |-------|      |      | PgDn | PgUp |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            |      |      |      |  SYM | /Enter  /       \Space \  |  NAV |      |      |      |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
+ *            |      |      |      |  SYM | / BSPC  /       \Space \  |  NAV |      |      |      |
+ *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
+ *            `-----------------------------------'           '------''---------------------------'
  */
-[_NAVIGATION] = LAYOUT(
-  _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                       KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,
+[_NAV] = LAYOUT(
+  _______,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                       XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,
   KC_GRV,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_F12,
   _______, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                       KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_PIPE,
   _______,  KC_EQL, KC_MINS, KC_PLUS, KC_LCBR, KC_RCBR, _______,       _______, KC_LBRC, KC_RBRC, KC_SCLN, KC_COLN, KC_BSLS, _______,
-                       _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
-),/* NUMBERS
+                       XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,       _______, _______, _______, _______, _______
+),
+/* NUMBERS
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -164,16 +160,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
  * |      | LGUI | RAlt |  .   |  ,   |      |-------|    |-------|   =  |   1  |   2  |   3  |   0  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
- *            `----------------------------------'           '------''---------------------------'
+ *            |      |      |      |  SYM | / BSPC  /       \Space \  |  NAV |      |      |      |
+ *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
+ *            `-----------------------------------'           '------''---------------------------'
  */
-[_NUMBER] = LAYOUT(    
-  _______,    _______,     _______,    _______,   _______,    _______,                     _______,  _______, _______, _______, _______,  _______,
-  _______,    _______,     _______,    _______,   _______,    _______,                     KC_ASTR,  KC_7,    KC_8,    KC_9,    KC_MINS,  _______,
-  _______,    KC_DOT,      KC_LALT,    KC_RSFT,   KC_LCTRL,   _______,                     KC_SLSH,  KC_4,    KC_5,    KC_6,    KC_PLUS, _______,
-  _______,    KC_LGUI,     KC_RALT,    KC_DOT,    KC_COMM,    _______, _______,   _______, KC_EQL,   KC_1,    KC_2,    KC_3,    KC_ENT, _______,
-                       _______, _______, _______, _______,    KC_ENT,                 KC_SPC, _______, _______, _______, _______
+[_NUM] = LAYOUT(    
+  XXXXXXX,    XXXXXXX,     XXXXXXX,    XXXXXXX,   XXXXXXX,    XXXXXXX,                     XXXXXXX,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  XXXXXXX,    XXXXXXX,     XXXXXXX,    XXXXXXX,   XXXXXXX,    XXXXXXX,                     KC_ASTR,  KC_7,    KC_8,    KC_9,    KC_MINS, XXXXXXX,
+  XXXXXXX,    XXXXXXX,     KC_LALT,    KC_RSFT,   KC_LCTRL,   XXXXXXX,                     KC_SLSH,  KC_4,    KC_5,    KC_6,    KC_PLUS, XXXXXXX,
+  XXXXXXX,    KC_LGUI,     KC_RALT,    KC_DOT,    KC_COMM,    XXXXXXX, XXXXXXX,   XXXXXXX, KC_EQL,   KC_1,    KC_2,    KC_3,    KC_ENT, XXXXXXX,
+                       XXXXXXX, XXXXXXX, XXXXXXX, _______,    _______,                 _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
 
@@ -218,13 +214,13 @@ static void print_status_narrow(void) {
         case _QWERTY:
             oled_write_P(PSTR("Base\n"), false);
             break;
-        case _NUMBER:
+        case _NUM:
             oled_write_P(PSTR("Number"), false);
             break;
-        case _SYMBOL:
+        case _SYM:
             oled_write_P(PSTR("Symbol"), false);
             break;
-        case _NAVIGATION:
+        case _NAV:
             oled_write_P(PSTR("Nav\n"), false);
             break;
         default:
@@ -267,27 +263,27 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case KC_NAV:
             if (record->event.pressed) {
-                layer_on(_NAVIGATION);
-                update_tri_layer(_NAVIGATION, _SYMBOL, _NUMBER);
+                layer_on(_NAV);
+                update_tri_layer(_NAV, _SYM, _NUM);
             } else {
-                layer_off(_NAVIGATION);
-                update_tri_layer(_NAVIGATION, _SYMBOL, _NUMBER);
+                layer_off(_NAV);
+                update_tri_layer(_NAV, _SYM, _NUM);
             }
             return false;
         case KC_SYM:
             if (record->event.pressed) {
-                layer_on(_SYMBOL);
-                update_tri_layer(_NAVIGATION, _SYMBOL, _NUMBER);
+                layer_on(_SYM);
+                update_tri_layer(_NAV, _SYM, _NUM);
             } else {
-                layer_off(_SYMBOL);
-                update_tri_layer(_NAVIGATION, _SYMBOL, _NUMBER);
+                layer_off(_SYM);
+                update_tri_layer(_NAV, _SYM, _NUM);
             }
             return false;
         case KC_NMBR:
             if (record->event.pressed) {
-                layer_on(_NUMBER);
+                layer_on(_NUM);
             } else {
-                layer_off(_NUMBER);
+                layer_off(_NUM);
             }
             return false;
         case KC_PRVWD:
