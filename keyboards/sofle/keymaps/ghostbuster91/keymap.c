@@ -1,5 +1,13 @@
 #include QMK_KEYBOARD_H
 
+const uint16_t PROGMEM combo_fp_tab[] = {KC_F, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_lu_esc[] = {KC_L, KC_U, COMBO_END};
+combo_t key_combos[COMBO_COUNT] = {
+    COMBO(combo_fp_tab, KC_TAB),
+    COMBO(combo_lu_esc, KC_ESC), 
+};
+
+
 // This keymap uses home row mods. In addition to mods, I have home row
 // layer-tap keys for the SYM layer. The key arrangement is a variation on
 // "GASC-order" home row mods:
@@ -39,8 +47,8 @@
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _COLEMAK_DH,
-    _NAV,
     _QWERTY,
+    _NAV,
     _SYM,
     _NUM,
 };
