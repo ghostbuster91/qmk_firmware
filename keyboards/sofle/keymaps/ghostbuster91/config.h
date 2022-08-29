@@ -6,3 +6,5 @@ for more options.
 */
 #define COMBO_COUNT 2
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#define PERMISSIVE_HOLD
+#define IGNORE_MOD_TAP_INTERRUPT
