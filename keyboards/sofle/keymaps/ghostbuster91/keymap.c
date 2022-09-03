@@ -27,10 +27,10 @@ combo_t key_combos[COMBO_COUNT] = {
 #define HOME_N  RCTL_T(KC_N)
 #define HOME_E  RSFT_T(KC_E)
 #define HOME_I  LALT_T(KC_I)
-#define HOME_Z  LGUI_T(KC_Z)
-#define HOME_X  RALT_T(KC_X)
-#define HOME_DOT  RALT_T(KC_DOT)	
-#define HOME_SLSH  RGUI_T(KC_SLSH)	
+#define HOME_A  LGUI_T(KC_A)
+#define HOME_G  RALT_T(KC_G)
+#define HOME_M  RALT_T(KC_M)	
+#define HOME_O  RGUI_T(KC_O)	
 
 // Home row mods for QWERTY layer.
 #define QHOME_S LALT_T(KC_S)
@@ -39,10 +39,10 @@ combo_t key_combos[COMBO_COUNT] = {
 #define QHOME_J RCTL_T(KC_J)
 #define QHOME_K RSFT_T(KC_K)
 #define QHOME_L LALT_T(KC_L)
-#define QHOME_Z  LGUI_T(KC_Z)
-#define QHOME_X  RALT_T(KC_X)
-#define QHOME_DOT  RALT_T(KC_DOT)
-#define QHOME_SLSH  RGUI_T(KC_SLSH)
+#define QHOME_A  LGUI_T(KC_A)
+#define QHOME_G  RALT_T(KC_G)
+#define QHOME_H  RALT_T(KC_H)
+#define QHOME_SCLN  RGUI_T(KC_SCLN)
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
@@ -73,11 +73,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |                    |  F7  |  F8  |  F9  |  F10 | F11  | F12  |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |QWERTY|   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   ;  |      |
+ * |      |   Q  |   W  |   F  |   P  |   B  |                    |   J  |   L  |   U  |   Y  |   ;  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * | ESC  |   A  |  R/◆ |  S/⇧ | T/⎈  |   G  |-------.    ,-------|   M  | N/⎈  | E/⇧  | I/◆  |   O  |  '   |
+ * | ESC  | A/⎇  |  R/◆ |  S/⇧ | T/⎈  |  G/◆ |-------.    ,-------| M/◆  | N/⎈  | E/⇧  | I/◆  | O/⎇  |  '   |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      | Z/⎇  |  X/◆ |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  | ./◆  | //⎇  |  _   |
+ * |      | Z    |  X   |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  |  _   |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
@@ -86,15 +86,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_COLEMAK_DH] = LAYOUT(
   KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,     KC_F6,                         KC_F7,    KC_F8,    KC_F9,    KC_F10,    KC_F11,     KC_F12,
-  KC_QWERTY, KC_Q,      KC_W,      KC_F,      KC_P,      KC_B,                          KC_J,     KC_L,     KC_U,     KC_Y,      KC_SCLN,    XXXXXXX,
-  KC_ESC,    KC_A,      HOME_R,    HOME_S,    HOME_T,    KC_G,                          KC_M,     HOME_N,   HOME_E,   HOME_I,    KC_O,       KC_QUOT,
-  XXXXXXX,   HOME_Z,    HOME_X,    KC_C,      KC_D,      KC_V,    KC_MUTE,     XXXXXXX, KC_K,     KC_H,     KC_COMM,  HOME_DOT,  HOME_SLSH,  KC_UNDS,
+  XXXXXXX,   KC_Q,      KC_W,      KC_F,      KC_P,      KC_B,                          KC_J,     KC_L,     KC_U,     KC_Y,      KC_SCLN,    XXXXXXX,
+  KC_ESC,    HOME_A,    HOME_R,    HOME_S,    HOME_T,    HOME_G,                        HOME_M,   HOME_N,   HOME_E,   HOME_I,    HOME_O,     KC_QUOT,
+  XXXXXXX,   KC_Z,      KC_X,      KC_C,      KC_D,      KC_V,    KC_MUTE,     XXXXXXX, KC_K,     KC_H,     KC_COMM,  KC_DOT,    KC_SLSH,    KC_UNDS,
                  XXXXXXX, XXXXXXX, XXXXXXX, MO(_NAV), KC_BSPC,    KC_SPC,  LT(_SYM, KC_ENT), XXXXXXX, XXXXXXX, XXXXXXX
 ),
 /*
  * QWERTY
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |COLEMA|   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
+ * |      |   1  |   2  |   3  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |  `   |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * | ESC  |   Q  |   W  |   E  |   R  |   T  |                    |   Y  |   U  |   I  |   O  |   P  | Bspc |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -102,16 +102,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
  * |LShift|   Z  |   X  |   C  |   V  |   B  |-------|    |-------|   N  |   M  |   ,  |   .  |   /  |RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            | LGUI | LAlt | LCTR |LOWER | /Enter  /       \Space \  |RAISE | RCTR | RAlt | RGUI |
- *            |      |      |      |      |/       /         \      \ |      |      |      |      |
+ *            |      |      |      | NAV  | / BSPC  /       \Space \  |  SYM |      |      |      |
+ *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
  *            `----------------------------------'           '------''---------------------------'
  */
 [_QWERTY] = LAYOUT(
-  KC_COLEMAK,   KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_GRV,
+  XXXXXXX,  KC_1,   KC_2,    KC_3,    KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,  KC_GRV,
   KC_ESC,   KC_Q,   KC_W,    KC_E,    KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,  KC_BSPC,
-  KC_TAB,   KC_A,   QHOME_S,    QHOME_D,    QHOME_F,    KC_G,                     KC_H,    QHOME_J,    QHOME_K,    QHOME_L, KC_SCLN,  KC_QUOT,
-  KC_LSFT,  QHOME_Z,   QHOME_X,    KC_C,    KC_B,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  QHOME_DOT, QHOME_SLSH,  KC_RSFT,
-                 KC_LGUI,KC_LALT,KC_LCTRL, XXXXXXX, KC_ENT,      KC_SPC,  XXXXXXX, KC_RCTRL, KC_RALT, KC_RGUI
+  KC_TAB,   QHOME_A,QHOME_S, QHOME_D, QHOME_F, QHOME_G,                  QHOME_H, QHOME_J, QHOME_K, QHOME_L, QHOME_SCLN,  KC_QUOT,
+  KC_LSFT,  KC_Z,   KC_X,    KC_C,    KC_B,    KC_B, KC_MUTE,     XXXXXXX,KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+                 XXXXXXX,XXXXXXX,XXXXXXX, MO(_NAV), KC_BSPC,      KC_SPC,  LT(_SYM,KC_ENT), XXXXXXX, XXXXXXX, XXXXXXX
 ),
 /*
  * _SYMBOL
@@ -138,23 +138,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* NAVIGATION
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * | RST  |      |      |      |      |      |                    |      |      |      |      |COLEMA|QWERTY|
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |      |      |      |      |                    |      |      | Home |  End |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      | LAlt |LShift| LCTR |      |-------.    ,-------|      | LEFT | DOWN |  UP  | RIGHT|      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      | LGUI | RAlt |      |      |      |-------|    |-------|      |      | PgDn | PgUp |      |      |
+ * |      | UNDO | CUT  | COPY | PASTE|      |-------|    |-------|      |      | PgDn | PgUp |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
  *            `-----------------------------------'           '------''---------------------------'
  */
 [_NAV] = LAYOUT(
-  _______,   _______,   _______,   _______,   _______,   _______,                       _______,   _______,   _______,   _______,   _______,   _______,
+  QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,   _______,   _______,   _______,  KC_COLEMAK, KC_QWERTY,
   _______,   _______,   _______,   _______,   _______,   _______,                       _______,   _______,   KC_HOME,   KC_END,    _______,   _______,
-  _______,   _______,   KC_LALT,   KC_LSFT,   KC_LCTRL,  _______,                       _______,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RIGHT,  _______,
-  _______,   KC_LGUI,   KC_RALT,   _______,   _______,   _______, _______,     _______, _______,   _______,   KC_PGDOWN, KC_PGUP,   _______,   _______,
+  _______,   KC_LGUI,   KC_LALT,   KC_LSFT,   KC_LCTRL,  KC_RALT,                       _______,   KC_LEFT,   KC_DOWN,   KC_UP,     KC_RIGHT,  _______,
+  _______,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,   _______,   KC_PGDOWN, KC_PGUP,   _______,   _______,
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* NUMBERS
@@ -218,8 +218,10 @@ static void print_status_narrow(void) {
     oled_write_ln_P(PSTR("LAYER"), false);
     switch (get_highest_layer(layer_state)) {
         case _COLEMAK_DH:
+            oled_write_P(PSTR("CBase\n"), false);
+            break;
         case _QWERTY:
-            oled_write_P(PSTR("Base\n"), false);
+            oled_write_P(PSTR("Qwrt\n"), false);
             break;
         case _NUM:
             oled_write_P(PSTR("Number"), false);
