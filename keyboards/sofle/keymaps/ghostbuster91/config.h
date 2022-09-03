@@ -6,5 +6,12 @@ for more options.
 */
 #define COMBO_COUNT 2
 #define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
-#define PERMISSIVE_HOLD
+
+#ifdef TAPPING_TERM
+#  undef TAPPING_TERM
+#endif // !TAPPING_TERM	
+
+#define TAPPING_TERM 200 
+
 #define IGNORE_MOD_TAP_INTERRUPT
+
