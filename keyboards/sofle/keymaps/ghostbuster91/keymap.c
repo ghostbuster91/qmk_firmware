@@ -273,19 +273,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_NAV:
             if (record->event.pressed) {
                 layer_on(_NAV);
-                update_tri_layer(_NAV, _SYM, _NUM);
             } else {
                 layer_off(_NAV);
-                update_tri_layer(_NAV, _SYM, _NUM);
             }
             return false;
         case KC_SYM:
             if (record->event.pressed) {
                 layer_on(_SYM);
-                update_tri_layer(_NAV, _SYM, _NUM);
             } else {
                 layer_off(_SYM);
-                update_tri_layer(_NAV, _SYM, _NUM);
             }
             return false;
         case KC_NMBR:
@@ -417,6 +413,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
     }
     return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+  return update_tri_layer_state(state, _NAV, _SYM, _NUM);
 }
 
 #ifdef ENCODER_ENABLE
