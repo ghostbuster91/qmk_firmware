@@ -32,6 +32,18 @@ combo_t key_combos[COMBO_COUNT] = {
 #define HOME_M  RALT_T(KC_M)	
 #define HOME_O  RGUI_T(KC_O)	
 
+// Home row mods for number layer.
+#define NUM_6 LGUI_T(KC_6)
+#define NUM_4 LALT_T(KC_4)
+#define NUM_2 LSFT_T(KC_2)
+#define NUM_0 LCTL_T(KC_0)
+#define NUM_ASTR RALT_T(KC_ASTR)
+#define NUM_SLSH RALT_T(KC_SLSH)
+#define NUM_3 RCTL_T(KC_3)
+#define NUM_1 RSFT_T(KC_1)
+#define NUM_5 LALT_T(KC_5)
+#define NUM_7 RGUI_T(KC_7)
+
 // Home row mods for QWERTY layer.
 #define QHOME_S LALT_T(KC_S)
 #define QHOME_D LSFT_T(KC_D)
@@ -161,11 +173,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |  0   |      |                    |   *  |   7  |   8  |   9  |   -  |      |
+ * |      |      |      |  +   |  %   |      |                    |      |  -   |  .   |  ,   |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      | LGUI | LAlt |LShift| LCTR | RAlt |-------.    ,-------|   /  |   3  |   4  |   5  |   +  |      |
+ * |      |   6  |  4   |  0   |  2   |  *   |-------.    ,-------|  /   |  1   |  3   |  5   |  7   |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      |      |      |  .   |  ,   |      |-------|    |-------|   =  |   1  |   2  |   3  |      |      |
+ * |      |      |      |  "   |  8   |      |-------|    |-------|  =   |  9   |   (  |  )   |  _   |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
@@ -173,9 +185,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NUM] = LAYOUT(    
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
-  XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_0,      XXXXXXX,                     KC_ASTR,   KC_7,      KC_8,      KC_9,      KC_MINS,   XXXXXXX,
-  XXXXXXX,   KC_LGUI,   KC_LALT,   KC_RSFT,   KC_LCTRL,  KC_RALT,                     KC_SLSH,   KC_4,      KC_5,      KC_6,      KC_PLUS,   XXXXXXX,
-  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DOT,    KC_COMM,   XXXXXXX, XXXXXXX,   XXXXXXX, KC_EQL,    KC_1,      KC_2,      KC_3,      XXXXXXX,   XXXXXXX,
+  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_PLUS,   KC_PERC,   XXXXXXX,                     XXXXXXX,   KC_MINS,   KC_DOT,    KC_COLON,   XXXXXXX,  XXXXXXX,
+  XXXXXXX,   NUM_6,     NUM_4,     NUM_0,     NUM_2,     NUM_ASTR,                    NUM_SLSH,  NUM_1,     NUM_3,     NUM_5,     NUM_7,     XXXXXXX,
+  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_8,      XXXXXXX, XXXXXXX,   XXXXXXX, KC_EQL,    KC_9,      KC_LPRN,   KC_RPRN,   KC_UNDS,   XXXXXXX,
                        XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,                 _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
