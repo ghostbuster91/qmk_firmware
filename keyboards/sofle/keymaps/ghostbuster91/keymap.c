@@ -170,11 +170,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |  +   |  %   |      |                    |      |  -   |  .   |  ,   |      |      |
+ * |      |      |  .   | DOWN |  %   |  +   |                    |  -   |  =   |  UP  |  ,   |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |   6  |  4   |  0   |  2   |  *   |-------.    ,-------|  /   |  1   |  3   |  5   |  7   |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      |      |      |  "   |  8   |      |-------|    |-------|  =   |  9   |   (  |  )   |  _   |      |
+ * |      |      |      |  "   |  8   |      |-------|    |-------|      |  9   |   (  |  )   |  _   |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
@@ -182,9 +182,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NUM] = LAYOUT(    
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
-  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_PLUS,   KC_PERC,   XXXXXXX,                     XXXXXXX,   KC_MINS,   KC_DOT,    KC_COLON,  XXXXXXX,   XXXXXXX,
+  XXXXXXX,   XXXXXXX,   KC_DOT,    KC_DOWN,   KC_PERC,   KC_PLUS,                     KC_MINS,   KC_EQL,    KC_UP,     KC_COLON,  XXXXXXX,   XXXXXXX,
   XXXXXXX,   NUM_6,     NUM_4,     NUM_0,     NUM_2,     NUM_ASTR,                    NUM_SLSH,  NUM_1,     NUM_3,     NUM_5,     NUM_7,     XXXXXXX,
-  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_8,      XXXXXXX, XXXXXXX,   XXXXXXX, KC_EQL,    KC_9,      KC_LPRN,   KC_RPRN,   KC_UNDS,   XXXXXXX,
+  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_8,      XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   KC_9,      KC_LPRN,   KC_RPRN,   KC_UNDS,   XXXXXXX,
                        XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,                 _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
