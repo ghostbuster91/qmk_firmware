@@ -30,16 +30,16 @@ combo_t key_combos[COMBO_COUNT] = {
 #define HOME_O  RGUI_T(KC_O)	
 
 // Home row mods for number layer.
-#define NUM_6 LGUI_T(KC_6)
-#define NUM_4 LALT_T(KC_4)
-#define NUM_2 LSFT_T(KC_2)
-#define NUM_0 LCTL_T(KC_0)
+#define NUM_1 LGUI_T(KC_1)
+#define NUM_2 LALT_T(KC_2)
+#define NUM_3 LSFT_T(KC_3)
+#define NUM_4 LCTL_T(KC_4)
 #define NUM_ASTR RALT_T(KC_ASTR)
 #define NUM_SLSH RALT_T(KC_SLSH)
-#define NUM_3 RCTL_T(KC_3)
-#define NUM_1 RSFT_T(KC_1)
-#define NUM_5 LALT_T(KC_5)
-#define NUM_7 RGUI_T(KC_7)
+#define NUM_5 RCTL_T(KC_5)
+#define NUM_6 RSFT_T(KC_6)
+#define NUM_7 LALT_T(KC_7)
+#define NUM_8 RGUI_T(KC_8)
 
 // Home row mods for QWERTY layer.
 #define QHOME_S LALT_T(KC_S)
@@ -172,9 +172,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |  .   | DOWN |  %   |  +   |                    |  -   |  =   |  UP  |  ,   |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   6  |  4   |  0   |  2   |  *   |-------.    ,-------|  /   |  1   |  3   |  5   |  7   |      |
+ * |      |   1  |  2   |  3   |  4   |  *   |-------.    ,-------|  /   |  5   |  6   |  7   |  8   |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      |      |      |  "   |  8   |      |-------|    |-------|      |  9   |   (  |  )   |  _   |      |
+ * |      |      |      |  "   |  0   |      |-------|    |-------|      |  9   |   (  |  )   |  _   |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
@@ -183,8 +183,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NUM] = LAYOUT(    
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
   XXXXXXX,   XXXXXXX,   KC_DOT,    KC_DOWN,   KC_PERC,   KC_PLUS,                     KC_MINS,   KC_EQL,    KC_UP,     KC_COLON,  XXXXXXX,   XXXXXXX,
-  XXXXXXX,   NUM_6,     NUM_4,     NUM_0,     NUM_2,     NUM_ASTR,                    NUM_SLSH,  NUM_1,     NUM_3,     NUM_5,     NUM_7,     XXXXXXX,
-  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_8,      XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   KC_9,      KC_LPRN,   KC_RPRN,   KC_UNDS,   XXXXXXX,
+  XXXXXXX,   NUM_1,     NUM_2,     NUM_3,     NUM_4,     NUM_ASTR,                    NUM_SLSH,  NUM_5,     NUM_6,     NUM_7,     NUM_8,     XXXXXXX,
+  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_0,      XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   KC_9,      KC_LPRN,   KC_RPRN,   KC_UNDS,   XXXXXXX,
                        XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,                 _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
