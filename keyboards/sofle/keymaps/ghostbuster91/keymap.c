@@ -34,12 +34,12 @@ combo_t key_combos[COMBO_COUNT] = {
 #define NUM_2 LALT_T(KC_2)
 #define NUM_3 LSFT_T(KC_3)
 #define NUM_4 LCTL_T(KC_4)
-#define NUM_ASTR RALT_T(KC_ASTR)
-#define NUM_SLSH RALT_T(KC_SLSH)
-#define NUM_5 RCTL_T(KC_5)
-#define NUM_6 RSFT_T(KC_6)
-#define NUM_7 LALT_T(KC_7)
-#define NUM_8 RGUI_T(KC_8)
+#define NUM_5 RALT_T(KC_5)
+#define NUM_6 RALT_T(KC_6)
+#define NUM_7 RCTL_T(KC_7)
+#define NUM_8 RSFT_T(KC_8)
+#define NUM_9 LALT_T(KC_9)
+#define NUM_0 RGUI_T(KC_0)
 
 // Home row mods for QWERTY layer.
 #define QHOME_S LALT_T(KC_S)
@@ -52,6 +52,9 @@ combo_t key_combos[COMBO_COUNT] = {
 #define QHOME_G  RALT_T(KC_G)
 #define QHOME_H  RALT_T(KC_H)
 #define QHOME_SCLN  RGUI_T(KC_SCLN)
+
+#define SPACE LT(_SYM, KC_SPC)
+#define BSPC LT(_NAV, KC_BSPC)
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
@@ -88,8 +91,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
  * |      | Z    |  X   |   C  |   D  |   V  |-------|    |-------|   K  |   H  |   ,  |   .  |   /  |  _   |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
- *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
+ *            |      |      | TAB  |  DEL | / BSPC  /       \Space \  |  ENT |      |      |      |
+ *            |      |      |      |      |/  NAV  /         \ SYM  \ |      |      |      |      |
  *            `-----------------------------------'           '------''---------------------------'
  */
 
@@ -98,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX,   KC_Q,      KC_W,      KC_F,      KC_P,      KC_B,                          KC_J,     KC_L,     KC_U,     KC_Y,      KC_SCLN,    XXXXXXX,
   KC_ESC,    HOME_A,    HOME_R,    HOME_S,    HOME_T,    HOME_G,                        HOME_M,   HOME_N,   HOME_E,   HOME_I,    HOME_O,     KC_QUOT,
   XXXXXXX,   KC_Z,      KC_X,      KC_C,      KC_D,      KC_V,    KC_MUTE,     XXXXXXX, KC_K,     KC_H,     KC_COMM,  KC_DOT,    KC_SLSH,    KC_UNDS,
-                 XXXXXXX, XXXXXXX, XXXXXXX, MO(_NAV), KC_BSPC,    KC_SPC,  LT(_SYM, KC_ENT), XXXXXXX, XXXXXXX, XXXXXXX
+                 XXXXXXX, XXXXXXX, KC_TAB,    KC_DEL,    BSPC,    SPACE,  KC_ENT, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 /*
  * QWERTY
@@ -133,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
  * |      |   ^  |   /  |   *  |   \  |      |-------|    |-------|   ~  |   $  |   {  |   }  |   @  |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *            |      |      |      |  NAV | / BSCP  /       \Space \  |  SYM |      |      |      |
+ *            |      |      |      |  DEL | / BSCP  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
  *            `-----------------------------------'           '------''---------------------------'
  */
@@ -149,11 +152,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * | RST  |      |      |      |      |      |                    |      |      |      |      |COLEMA|QWERTY|
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |SELECT|                    |      |NXTVWD| Home |  End |      |      |
+ * |      |      |      |      |SELECT|      | 	                  |      | Home | PgDn | PgUp | End  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      | LGUI | LAlt |LShift| LCTR | RAlt |-------.    ,-------|      | LEFT | DOWN |  UP  | RIGHT|      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      | UNDO | CUT  | COPY | PASTE|      |-------|    |-------|      |PRVWD | PgDn | PgUp |      |      |
+ * |      | UNDO | CUT  | COPY | PASTE|      |-------|    |-------|      |      |PRVWD |NXTWD |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
@@ -161,9 +164,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NAV] = LAYOUT(
   QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,   _______,    _______,   _______,  KC_COLEMAK, KC_QWERTY,
-  _______,   _______,   _______,   _______,   LCTL(KC_A),_______,                       _______,   KC_NXTWD,   KC_HOME,   KC_END,    _______,   _______,
+  _______,   _______,   _______,   _______,   LCTL(KC_A),_______,                       _______,   KC_HOME,    KC_PGDOWN, KC_PGUP,   KC_END,    _______,
   _______,   KC_LGUI,   KC_LALT,   KC_LSFT,   KC_LCTRL,  KC_RALT,                       _______,   KC_LEFT,    KC_DOWN,   KC_UP,     KC_RIGHT,  _______,
-  _______,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,   KC_PRVWD,   KC_PGDOWN, KC_PGUP,   _______,   _______,
+  _______,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,   _______,    KC_PRVWD,  KC_NXTWD,  _______,   _______,
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* NUMBERS
@@ -172,7 +175,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |  .   | DOWN |  %   |  +   |                    |  -   |  =   |  UP  |  ,   |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   1  |  2   |  3   |  4   |  *   |-------.    ,-------|  /   |  5   |  6   |  7   |  8   |      |
+ * |      |   1  |  2   |  3   |  4   |  5   |-------.    ,-------|  6   |  7   |  8   |  9   |  0   |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
  * |      |      |      |  "   |  0   |      |-------|    |-------|      |  9   |   (  |  )   |  _   |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
@@ -183,8 +186,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NUM] = LAYOUT(    
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
   XXXXXXX,   XXXXXXX,   KC_DOT,    KC_DOWN,   KC_PERC,   KC_PLUS,                     KC_MINS,   KC_EQL,    KC_UP,     KC_COLON,  XXXXXXX,   XXXXXXX,
-  XXXXXXX,   NUM_1,     NUM_2,     NUM_3,     NUM_4,     NUM_ASTR,                    NUM_SLSH,  NUM_5,     NUM_6,     NUM_7,     NUM_8,     XXXXXXX,
-  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_0,      XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   KC_9,      KC_LPRN,   KC_RPRN,   KC_UNDS,   XXXXXXX,
+  XXXXXXX,   NUM_1,     NUM_2,     NUM_3,     NUM_4,     NUM_5,                       NUM_6,     NUM_7,     NUM_8,     NUM_9,     NUM_0,      XXXXXXX,
+  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_ASTR,   XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   KC_SLSH,   KC_LPRN,   KC_RPRN,   KC_UNDS,   XXXXXXX,
                        XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,                 _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
@@ -434,12 +437,13 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         }
     } else if (index == 1) {
         if (clockwise) {
-            tap_code(KC_PGDOWN);
-        } else {
             tap_code(KC_PGUP);
+        } else {
+            tap_code(KC_PGDOWN);
         }
     }
     return true;
 }
 
 #endif
+
