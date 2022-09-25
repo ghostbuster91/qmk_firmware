@@ -75,7 +75,8 @@ enum custom_keycodes {
     KC_NXTWD,
     KC_LSTRT,
     KC_LEND,
-    KC_DLINE
+    KC_DLINE,
+    KC_TMUX
 };
 
 
@@ -152,7 +153,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * | RST  |      |      |      |      |      |                    |      |      |      |      |COLEMA|QWERTY|
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |SELECT|      | 	                  | Home | PgDn | PgUp | End  |      |      |
+ * |      |      |      |      |SELECT| TMUX | 	                  | Home | PgDn | PgUp | End  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      | LGUI | LAlt |LShift| LCTR | RAlt |-------.    ,-------| LEFT | DOWN |  UP  | RIGHT|      |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
@@ -164,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NAV] = LAYOUT(
   QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,   _______,  KC_COLEMAK, KC_QWERTY, _______,   
-  _______,   _______,   _______,   _______,   LCTL(KC_A),_______,                       KC_HOME,    KC_PGDOWN, KC_PGUP,   KC_END,    _______,   _______,   
+  _______,   _______,   _______,   _______,   LCTL(KC_A),KC_TMUX,                       KC_HOME,    KC_PGDOWN, KC_PGUP,   KC_END,    _______,   _______,   
   _______,   KC_LGUI,   KC_LALT,   KC_LSFT,   KC_LCTRL,  KC_RALT,                       KC_LEFT,    KC_DOWN,   KC_UP,     KC_RIGHT,  _______,   _______,   
   _______,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PRVWD,  KC_NXTWD,  _______,   _______,   _______,   
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
@@ -416,6 +417,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 unregister_mods(mod_config(MOD_LCTL));
                 unregister_code(KC_Z);
+            }
+            return false;
+	case KC_TMUX:
+            if (record->event.pressed) {
+                register_mods(mod_config(MOD_LCTL));
+                register_code(KC_B);
+            } else {
+                unregister_mods(mod_config(MOD_LCTL));
+                unregister_code(KC_B);
             }
             return false;
     }
