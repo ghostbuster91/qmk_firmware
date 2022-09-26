@@ -55,10 +55,17 @@ combo_t key_combos[COMBO_COUNT] = {
 
 #define SPACE LT(_SYM, KC_SPC)
 #define BSPC LT(_NAV, KC_BSPC)
+#define DEL LSFT_T(KC_DEL)
+
+#define      O_GUI    OSM(MOD_LGUI)
+#define      O_SFT    OSM(MOD_LSFT)
+#define      O_CTL    OSM(MOD_LCTL)
+#define      O_LALT    OSM(MOD_LALT)
+#define      O_RALT    OSM(MOD_RALT)
 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
-    _COLEMAK_DH,
+    _CLM,
     _QWERTY,
     _NAV,
     _SYM,
@@ -97,12 +104,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            `-----------------------------------'           '------''---------------------------'
  */
 
-[_COLEMAK_DH] = LAYOUT(
+[_CLM] = LAYOUT(
   KC_F1,     KC_F2,     KC_F3,     KC_F4,     KC_F5,     KC_F6,                         KC_F7,    KC_F8,    KC_F9,    KC_F10,    KC_F11,     KC_F12,
   XXXXXXX,   KC_Q,      KC_W,      KC_F,      KC_P,      KC_B,                          KC_J,     KC_L,     KC_U,     KC_Y,      KC_SCLN,    XXXXXXX,
   KC_ESC,    HOME_A,    HOME_R,    HOME_S,    HOME_T,    HOME_G,                        HOME_M,   HOME_N,   HOME_E,   HOME_I,    HOME_O,     KC_QUOT,
   XXXXXXX,   KC_Z,      KC_X,      KC_C,      KC_D,      KC_V,    KC_MUTE,     XXXXXXX, KC_K,     KC_H,     KC_COMM,  KC_DOT,    KC_SLSH,    KC_UNDS,
-                 XXXXXXX, XXXXXXX, KC_TAB,    KC_DEL,    BSPC,    SPACE,  KC_ENT, XXXXXXX, XXXXXXX, XXXXXXX
+                 XXXXXXX, XXXXXXX, KC_TAB,    DEL,       BSPC,    SPACE,  KC_ENT, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 /*
  * QWERTY
@@ -131,7 +138,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   '  |   <  |   >  |   "  |   .  |                    |   &  |   _  |   [  |   ]  |   %  |      |
+ * |      |   '  |   <  |   >  |   "  |   `  |                    |   &  |   _  |   [  |   ]  |   %  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |   !  |   -  |   +  |   =  |   #  |-------.    ,-------|   |  |   :  |   (  |   )  |   ;  | LOCK |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
@@ -144,7 +151,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_SYM] = LAYOUT(
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                      XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
-  KC_ESC,    KC_QUOT,   KC_LABK,   KC_RABK,   KC_DQUO,   KC_DOT,                       KC_AMPR,   KC_UNDERSCORE,KC_LBRC,KC_RBRC,   KC_PERC,   XXXXXXX,
+  KC_ESC,    KC_QUOT,   KC_LABK,   KC_RABK,   KC_DQUO,   KC_GRV,                       KC_AMPR,   KC_UNDERSCORE,KC_LBRC,KC_RBRC,   KC_PERC,   XXXXXXX,
   KC_TAB,    KC_EXLM,   KC_MINS,   KC_PLUS,   KC_EQL,    KC_HASH,                      KC_PIPE,   KC_COLON,  KC_LPRN,   KC_RPRN,   KC_SCLN,   XXXXXXX,
   KC_LSFT,   KC_CIRC,   KC_SLSH,   KC_ASTR,   KC_BSLS,   KC_AT,   KC_MUTE,    XXXXXXX, KC_TILD,   KC_DLR,    KC_LCBR,   KC_RCBR,   KC_QUES,   XXXXXXX,
             		      XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,    _______, _______, XXXXXXX, XXXXXXX, XXXXXXX 
@@ -153,11 +160,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * | RST  |      |      |      |      |      |                    |      |      |      |      |COLEMA|QWERTY|
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |      |      |SELECT| TMUX | 	                  | Home | PgDn | PgUp | End  |      |      |
+ * |      |      |KC_INS| PSCR |SELECT| TMUX | 	                  |      | Home |  UP  | End  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      | LGUI | LAlt |LShift| LCTR | RAlt |-------.    ,-------| LEFT | DOWN |  UP  | RIGHT|      |      |
+ * |      | LGUI | LAlt |LShift| LCTR | RAlt |-------.    ,-------|CPSWRD| LEFT | DOWN | RIGHT|      |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      | UNDO | CUT  | COPY | PASTE|      |-------|    |-------|      |PRVWD |NXTWD |      |      |      |
+ * |      | UNDO | CUT  | COPY | PASTE|      |-------|    |-------|      | PgDn | PgUp |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
@@ -165,9 +172,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NAV] = LAYOUT(
   QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,   _______,  KC_COLEMAK, KC_QWERTY, _______,   
-  _______,   _______,   _______,   _______,   LCTL(KC_A),KC_TMUX,                       KC_HOME,    KC_PGDOWN, KC_PGUP,   KC_END,    _______,   _______,   
-  _______,   KC_LGUI,   KC_LALT,   KC_LSFT,   KC_LCTRL,  KC_RALT,                       KC_LEFT,    KC_DOWN,   KC_UP,     KC_RIGHT,  _______,   _______,   
-  _______,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PRVWD,  KC_NXTWD,  _______,   _______,   _______,   
+  _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       _______,    KC_HOME,    KC_UP,   KC_END,    _______,   _______,   
+  _______,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        CAPSWRD,    KC_LEFT,    KC_DOWN, KC_RIGHT,  _______,   _______,   
+  _______,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP, _______,   _______,   _______,   
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* NUMBERS
@@ -215,7 +222,7 @@ static void print_status_narrow(void) {
         case _QWERTY:
             oled_write_ln_P(PSTR("Qwrt"), false);
             break;
-        case _COLEMAK_DH:
+        case _CLM:
             oled_write_ln_P(PSTR("Clmk"), false);
             break;
         default:
@@ -225,7 +232,7 @@ static void print_status_narrow(void) {
     // Print current layer
     oled_write_ln_P(PSTR("LAYER"), false);
     switch (get_highest_layer(layer_state)) {
-        case _COLEMAK_DH:
+        case _CLM:
             oled_write_P(PSTR("Base\n"), false);
             break;
         case _QWERTY:
@@ -275,7 +282,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case KC_COLEMAK:
             if (record->event.pressed) {
-                set_single_persistent_default_layer(_COLEMAK_DH);
+                set_single_persistent_default_layer(_CLM);
             }
             return false;
         case KC_NAV:
