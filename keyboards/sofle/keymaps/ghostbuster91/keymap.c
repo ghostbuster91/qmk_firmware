@@ -1,5 +1,11 @@
 #include QMK_KEYBOARD_H
 
+void update_swapper(bool *active, uint16_t cmdish, uint16_t tabish,
+                    uint16_t trigger, uint16_t prv, uint16_t sftish, uint16_t keycode, keyrecord_t *record);
+
+// To be implemented by the consumer. Defines keys to ignore when swapper is active.
+bool is_swapper_ignored_key(uint16_t keycode);
+
 const uint16_t PROGMEM combo_fp_tab[] = {KC_F, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_lu_esc[] = {KC_L, KC_U, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
@@ -8,6 +14,7 @@ combo_t key_combos[COMBO_COUNT] = {
 };
 
 
+bool alt_tab_active = true;
 // This keymap uses home row mods. In addition to mods, I have home row
 // layer-tap keys for the SYM layer. The key arrangement is a variation on
 // "GASC-order" home row mods:
@@ -83,7 +90,9 @@ enum custom_keycodes {
     KC_LSTRT,
     KC_LEND,
     KC_DLINE,
-    KC_TMUX
+    KC_TMUX,
+    ALT_TAB,
+    SFT_TAB
 };
 
 
@@ -160,21 +169,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * | RST  |      |      |      |      |      |                    |      |      |      |      |COLEMA|QWERTY|
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |KC_INS| PSCR |SELECT| TMUX | 	                  |      | Home |  UP  | End  |      |      |
+ * |      |      |KC_INS| PSCR |SELECT| TMUX | 	                  |CPSWRD| Tab  | Home | End  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      | LGUI | LAlt |LShift| LCTR | RAlt |-------.    ,-------|CPSWRD| LEFT | DOWN | RIGHT|      |      |
+ * |ALTTAB| LGUI | LAlt |LShift| LCTR | RAlt |-------.    ,-------| LEFT | DOWN |  UP  | RIGHT|      |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      | UNDO | CUT  | COPY | PASTE|      |-------|    |-------|      | PgDn | PgUp |      |      |      |
+ * |SFTTAB| UNDO | CUT  | COPY | PASTE|      |-------|    |-------|      | PgDn | PgUp |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
  *            `-----------------------------------'           '------''---------------------------'
  */
 [_NAV] = LAYOUT(
-  QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,   _______,  KC_COLEMAK, KC_QWERTY, _______,   
-  _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       _______,    KC_HOME,    KC_UP,   KC_END,    _______,   _______,   
-  _______,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        CAPSWRD,    KC_LEFT,    KC_DOWN, KC_RIGHT,  _______,   _______,   
-  _______,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP, _______,   _______,   _______,   
+  QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,    _______,  KC_COLEMAK, KC_QWERTY, _______,   
+  _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       CAPSWRD,    KC_TAB, 	KC_HOME,  KC_END,    _______,   _______,   
+  ALT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT,  _______,   _______,   
+  SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP,  _______,   _______,   _______,   
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* NUMBERS
@@ -274,6 +283,7 @@ bool oled_task_user(void) {
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, SFT_TAB, KC_LSFT, keycode, record);
     switch (keycode) {
         case KC_QWERTY:
             if (record->event.pressed) {
@@ -441,6 +451,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _NAV, _SYM, _NUM);
+}
+
+bool is_swapper_ignored_key(uint16_t keycode) {
+  switch (keycode) { 
+    default:
+      return false;
+  }
+}
+
+
+void update_swapper(bool *active, uint16_t cmdish, uint16_t tabish,
+                    uint16_t trigger, uint16_t prv, uint16_t sftish,
+		    uint16_t keycode, keyrecord_t *record) {
+  if (keycode == trigger) {
+    if (record->event.pressed) {
+      if (!*active) {
+        *active = true;
+        register_code(cmdish);
+      }
+      register_code(tabish);
+    } else {
+      unregister_code(tabish);
+      // Don't unregister cmdish until some other key is hit or released.
+    }
+  } else if (keycode == prv && *active) {
+    if (record->event.pressed) {
+	register_code16(S(tabish));
+    } else {
+        unregister_code16(S(tabish));
+    }
+  } else if (!is_swapper_ignored_key(keycode) && *active) {
+    // On non-ignored keyup, disable swapper
+    unregister_code(cmdish);
+    *active = false;
+  }
 }
 
 #ifdef ENCODER_ENABLE
