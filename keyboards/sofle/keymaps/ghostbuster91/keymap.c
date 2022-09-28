@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "features/layer_lock.h"
 
 void update_swapper(bool *active, uint16_t cmdish, uint16_t tabish,
                     uint16_t trigger, uint16_t prv, bool *other_active, uint16_t keycode, keyrecord_t *record);
@@ -87,6 +88,7 @@ enum custom_keycodes {
     ALT_TAB,
     SFT_TAB,
     VIM_WQ,
+    LLOCK,
 };
 
 
@@ -143,9 +145,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |   '  |   <  |   >  |   "  |   `  |                    |   &  |   _  |   [  |   ]  |   %  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   !  |   -  |   +  |   =  |   #  |-------.    ,-------|   |  |   :  |   (  |   )  |   ;  | LOCK |
+ * |      |   !  |   -  |   +  |   =  |   #  |-------.    ,-------|   |  |   :  |   (  |   )  |   ;  |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      |   ^  |   /  |   *  |   \  |   @  |-------|    |-------|   ~  |   $  |   {  |   }  |   ?  |      |
+ * |      |   ^  |   /  |   *  |   \  |   @  |-------|    |-------|   ~  |   $  |   {  |   }  |   ?  | LLOCK|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  DEL | / BSCP  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
@@ -156,7 +158,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                      XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
   KC_ESC,    KC_QUOT,   KC_LABK,   KC_RABK,   KC_DQUO,   KC_GRV,                       KC_AMPR,   KC_UNDERSCORE,KC_LBRC,KC_RBRC,   KC_PERC,   XXXXXXX,
   KC_TAB,    KC_EXLM,   KC_MINS,   KC_PLUS,   KC_EQL,    KC_HASH,                      KC_PIPE,   KC_COLON,  KC_LPRN,   KC_RPRN,   KC_SCLN,   XXXXXXX,
-  KC_LSFT,   KC_CIRC,   KC_SLSH,   KC_ASTR,   KC_BSLS,   KC_AT,   KC_MUTE,    XXXXXXX, KC_TILD,   KC_DLR,    KC_LCBR,   KC_RCBR,   KC_QUES,   XXXXXXX,
+  KC_LSFT,   KC_CIRC,   KC_SLSH,   KC_ASTR,   KC_BSLS,   KC_AT,   KC_MUTE,    XXXXXXX, KC_TILD,   KC_DLR,    KC_LCBR,   KC_RCBR,   KC_QUES,   LLOCK,
             		      XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,    _______, _______, XXXXXXX, XXXXXXX, XXXXXXX 
 ),
 /* NAVIGATION
@@ -177,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,    _______,  KC_COLEMAK, KC_QWERTY, _______,   
   _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       CAPSWRD,    KC_TAB, 	KC_HOME,  KC_END,    _______,   _______,   
   ALT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT,  _______,   VIM_WQ,   
-  SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP,  _______,   _______,   _______,   
+  SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP,  _______,   _______,   LLOCK,   
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* NUMBERS
@@ -188,7 +190,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |   1  |  2   |  3   |  4   |  5   |-------.    ,-------|  6   |  7   |  8   |  9   |  0   |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      |      |      |  "   |  0   |      |-------|    |-------|      |  /   |   (  |  )   |  _   |      |
+ * |      |      |      |  "   |  0   |      |-------|    |-------|      |  /   |   (  |  )   |  _   | LLOCK|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
@@ -197,8 +199,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NUM] = LAYOUT(    
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
   XXXXXXX,   XXXXXXX,   KC_DOT,    KC_DOWN,   KC_PERC,   KC_PLUS,                     KC_MINS,   KC_EQL,    KC_UP,     KC_COLON,  XXXXXXX,   XXXXXXX,
-  XXXXXXX,   NUM_1,     NUM_2,     NUM_3,     NUM_4,     NUM_5,                       NUM_6,     NUM_7,     NUM_8,     NUM_9,     NUM_0,      XXXXXXX,
-  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_ASTR,   XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   KC_SLSH,   KC_LPRN,   KC_RPRN,   KC_UNDS,   XXXXXXX,
+  XXXXXXX,   NUM_1,     NUM_2,     NUM_3,     NUM_4,     NUM_5,                       NUM_6,     NUM_7,     NUM_8,     NUM_9,     NUM_0,     XXXXXXX,
+  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_ASTR,   XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   KC_SLSH,   KC_LPRN,   KC_RPRN,   KC_UNDS,   LLOCK,
                        XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,                 _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
@@ -213,6 +215,13 @@ static void render_logo(void) {
     };
 
     oled_write_P(qmk_logo, false);
+}
+
+static void render_lock(void) {
+    static const char PROGMEM raw_logo[] = {
+        0,0xff,0xf1, 0xb1, 0xb1, 0xf1, 0xff, 0,
+    };
+    oled_write_P(raw_logo, false);
 }
 
 static void print_status_narrow(void) {
@@ -234,26 +243,30 @@ static void print_status_narrow(void) {
     oled_write_P(PSTR("\n\n"), false);
     // Print current layer
     oled_write_ln_P(PSTR("LAYER"), false);
-    switch (get_highest_layer(layer_state)) {
+    int current_layer = get_highest_layer(layer_state);
+    switch (current_layer) {
         case _CLM:
-            oled_write_P(PSTR("Base\n"), false);
+            oled_write_P(PSTR("Base"), false);
             break;
         case _QWERTY:
-            oled_write_P(PSTR("Qwrt\n"), false);
+            oled_write_P(PSTR("Base"), false);
             break;
         case _NUM:
-            oled_write_P(PSTR("NMBR\n"), false);
+            oled_write_P(PSTR("NMBR"), false);
             break;
         case _SYM:
-            oled_write_P(PSTR("SYM\n"), false);
+            oled_write_P(PSTR("SYM"), false);
             break;
         case _NAV:
-            oled_write_P(PSTR("NAV\n"), false);
+            oled_write_P(PSTR("NAV"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef"), false);
     }
-    oled_write_P(PSTR("\n\n"), false);
+    if (is_layer_locked(current_layer)) {
+	render_lock();
+    }
+    oled_write_P(PSTR("\n\n\n"), false);
     bool caps_word_state = is_caps_word_on();
     oled_write_ln_P(PSTR("CPSLK"), caps_word_state);
 }
@@ -277,6 +290,7 @@ bool oled_task_user(void) {
 #endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
     update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, SFT_TAB, &sft_grv_active, keycode, record);
     update_swapper(&sft_grv_active, KC_LALT, KC_GRV, SFT_TAB, ALT_TAB, &alt_tab_active, keycode, record);
     switch (keycode) {
