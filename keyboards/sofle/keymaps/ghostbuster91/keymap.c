@@ -85,7 +85,8 @@ enum custom_keycodes {
     KC_NMBR,
     KC_TMUX,
     ALT_TAB,
-    SFT_TAB
+    SFT_TAB,
+    VIM_WQ,
 };
 
 
@@ -164,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |KC_INS| PSCR |SELECT| TMUX | 	                  |CPSWRD| Tab  | Home | End  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |ALTTAB| LGUI | LAlt |LShift| LCTR | RAlt |-------.    ,-------| LEFT | DOWN |  UP  | RIGHT|      |      |
+ * |ALTTAB| LGUI | LAlt |LShift| LCTR | RAlt |-------.    ,-------| LEFT | DOWN |  UP  | RIGHT|      |  WQ  |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
  * |SFTTAB| UNDO | CUT  | COPY | PASTE|      |-------|    |-------|      | PgDn | PgUp |      |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
@@ -175,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_NAV] = LAYOUT(
   QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,    _______,  KC_COLEMAK, KC_QWERTY, _______,   
   _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       CAPSWRD,    KC_TAB, 	KC_HOME,  KC_END,    _______,   _______,   
-  ALT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT,  _______,   _______,   
+  ALT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT,  _______,   VIM_WQ,   
   SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP,  _______,   _______,   _______,   
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
@@ -356,6 +357,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_B);
             }
             return false;
+	case VIM_WQ:
+            if (record->event.pressed) {
+                register_code16(KC_COLON);
+                register_code(KC_W);
+                register_code(KC_Q);
+                register_code(KC_ENT);
+            } else {
+                unregister_code16(KC_COLON);
+                unregister_code(KC_W);
+                unregister_code(KC_Q);
+                unregister_code(KC_ENT);
+            }
     }
     return true;
 }
