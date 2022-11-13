@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "print.h"
 
 #define HOME_R  LALT_T(KC_R)
 #define HOME_S  LSFT_T(KC_S)
@@ -25,7 +26,7 @@
 
 #define SPACE LT(_SYM, KC_SPC)
 #define BSPC LT(_NAV, KC_BSPC)
-#define DEL LT(_NUM, KC_DEL) 
+#define DEL LT(_FUN, KC_DEL) 
 #define ENTER RSFT_T(KC_ENT) 
 
 #define      O_GUI    OSM(MOD_LGUI)
@@ -42,12 +43,13 @@
 enum tbkmini_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _CLM,
-    _QWERTY,
     _NAV,
     _SYM,
     _NUM,
     _ADJ,
-    _FUN
+    _FUN,
+    _GAME,
+    _GAME2
 };
 
 enum custom_keycodes {
@@ -63,6 +65,8 @@ enum custom_keycodes {
     KC_SFT_TAB,
     VIM_WQ,
     LLOCK,
+    KC_GAME,
+    KC_GAME2
 };
 
 
@@ -76,10 +80,36 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 	XXXXXXX    ,KC_Z     ,KC_X     ,KC_C    ,KC_D    ,KC_V     			,KC_K   ,KC_H   ,KC_COMM ,KC_DOT  ,KC_SLSH ,XXXXXXX  , 
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-						 KC_FUN, BSPC     ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
+						 KC_NMBR, BSPC     ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
         //`--------------------------'  `--------------------------'
 
         ),
+    [_GAME] = LAYOUT_split_3x6_3(
+
+        //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+	XXXXXXX     ,KC_ESC  ,KC_Q    ,KC_W    ,KC_E     ,KC_R         	     	     ,XXXXXXX ,XXXXXXX  ,XXXXXXX ,XXXXXXX, XXXXXXX, KC_COLEMAK  ,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+	XXXXXXX     ,KC_TAB  ,KC_A    ,KC_S    ,KC_D     ,KC_F                       ,XXXXXXX   ,XXXXXXX    ,XXXXXXX  ,XXXXXXX   ,XXXXXXX, XXXXXXX,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+	XXXXXXX     ,XXXXXXX ,KC_Z    ,KC_X    ,KC_C     ,KC_V               ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX, XXXXXXX, 
+        //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+        					LT(_NUM,KC_SPC), KC_GAME2, KC_ENT           ,XXXXXXX  ,XXXXXXX, XXXXXXX
+	//`--------------------------'  `--------------------------'
+        ),
+
+    [_GAME2] = LAYOUT_split_3x6_3(
+
+        //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+	XXXXXXX     ,XXXXXXX  ,KC_J    ,KC_M    ,KC_N   ,XXXXXXX         	     ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX, XXXXXXX  ,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+	XXXXXXX     ,XXXXXXX ,O_LALT  ,O_SFT   ,O_CTL   ,XXXXXXX                     ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX, XXXXXXX,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+	XXXXXXX     ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX               ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX, XXXXXXX, 
+        //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+        					_______, KC_SPC, KC_ENT           ,XXXXXXX  ,XXXXXXX, XXXXXXX
+	//`--------------------------'  `--------------------------'
+        ),
+
 
     [_NAV] = LAYOUT_split_3x6_3(
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -132,7 +162,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_ADJ] = LAYOUT_split_3x6_3(
 
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-	_______    , _______,   _______, _______   ,_______   ,	_______    ,           _______ ,_______  ,_______ ,_______, _______, QK_BOOT  ,
+	_______    , _______,   _______, _______   ,_______   ,	_______    ,           KC_COLEMAK ,KC_GAME  ,_______ ,_______, _______, QK_BOOT  ,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 	_______    , _______,     _______,  _______,   _______,   _______,             _______   ,_______    ,_______  ,_______   ,_______, _______,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -173,17 +203,18 @@ bool alt_tab_active = false;
 bool sft_grv_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // If console is enabled, it will print the matrix position and status of each key pressed
     update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, ALT_SFT_TAB, &sft_grv_active, keycode, record);
     update_swapper(&sft_grv_active, KC_LALT, KC_GRV, ALT_SFT_TAB, ALT_TAB, &alt_tab_active, keycode, record);
     switch (keycode) {
-        case KC_QWERTY:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_QWERTY);
-            }
-            return false;
         case KC_COLEMAK:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_CLM);
+            }
+            return false;
+        case KC_GAME:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_GAME);
             }
             return false;
         case KC_NAV:
@@ -205,6 +236,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 layer_on(_NUM);
             } else {
                 layer_off(_NUM);
+            }
+            return false;
+	case KC_GAME2:
+            if (record->event.pressed) {
+                layer_on(_GAME2);
+            } else {
+                layer_off(_GAME2);
             }
             return false;
 	case KC_FUN:
@@ -270,5 +308,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _NAV, _SYM, _ADJ);
+  state = update_tri_layer_state(state, _NAV, _SYM, _ADJ);
+  uprintf("%d layer\n", state);
+  return state;
 }
