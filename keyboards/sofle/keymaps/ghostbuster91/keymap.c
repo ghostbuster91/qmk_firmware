@@ -221,7 +221,7 @@ static void render_lock(void) {
     static const char PROGMEM raw_logo[] = {
         0,0xff,0xf1, 0xb1, 0xb1, 0xf1, 0xff, 0,
     };
-    oled_write_P(raw_logo, false);
+    oled_write_raw_P(raw_logo, sizeof(raw_logo));
 }
 
 static void print_status_narrow(void) {
@@ -265,6 +265,7 @@ static void print_status_narrow(void) {
     }
     if (is_layer_locked(current_layer)) {
 	render_lock();
+	oled_write_P(PSTR("<"), false);
     }
     oled_write_P(PSTR("\n\n\n"), false);
     bool caps_word_state = is_caps_word_on();
