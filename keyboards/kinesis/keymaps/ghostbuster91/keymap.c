@@ -309,23 +309,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_Z);
             }
             return false;
-	case KC_TMUX:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LCTL));
-                register_code(KC_B);
-            } else {
-                unregister_mods(mod_config(MOD_LCTL));
-                unregister_code(KC_B);
-            }
-            return false;
 	case VIM_WQ:
             if (record->event.pressed) {
-                register_code16(KC_COLON);
+                register_mods(mod_config(MOD_LSFT));
+                register_code(KC_SCLN);
+                unregister_mods(mod_config(MOD_LSFT));
                 register_code(KC_W);
                 register_code(KC_Q);
                 register_code(KC_ENT);
             } else {
-                unregister_code16(KC_COLON);
+                unregister_code(KC_SCLN);
                 unregister_code(KC_W);
                 unregister_code(KC_Q);
                 unregister_code(KC_ENT);
