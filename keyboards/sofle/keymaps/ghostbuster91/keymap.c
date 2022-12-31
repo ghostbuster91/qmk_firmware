@@ -61,7 +61,7 @@ bool sft_grv_active = false;
 
 #define SPACE LT(_SYM, KC_SPC)
 #define BSPC LT(_NAV, KC_BSPC)
-#define DEL LSFT_T(KC_DEL)
+#define DEL LT(_NUM, KC_DEL)
 
 #define      O_GUI    OSM(MOD_LGUI)
 #define      O_SFT    OSM(MOD_LSFT)
@@ -69,6 +69,9 @@ bool sft_grv_active = false;
 #define      O_LALT    OSM(MOD_LALT)
 #define      O_RALT    OSM(MOD_RALT)
 
+#define CT_TAB LCTL(KC_TAB)
+#define CT_SFT_TAB LCTL(LSFT(KC_TAB))
+ 
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _CLM,
@@ -76,6 +79,7 @@ enum sofle_layers {
     _NAV,
     _SYM,
     _NUM,
+    _ADJ
 };
 
 enum custom_keycodes {
@@ -87,7 +91,7 @@ enum custom_keycodes {
     KC_TMUX,
     ALT_TAB,
     SFT_TAB,
-    VIM_WQ,
+    VIM_W,
     LLOCK,
 };
 
@@ -177,20 +181,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NAV] = LAYOUT(
   QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,    _______,  KC_COLEMAK, KC_QWERTY, _______,   
-  _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       CAPSWRD,    KC_TAB, 	KC_HOME,  KC_END,    _______,   _______,   
-  ALT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT,  _______,   VIM_WQ,   
-  SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP,  _______,   _______,   LLOCK,   
+  _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       CAPS_WORD,  KC_TAB, 	KC_HOME,  KC_END,    _______,   _______,   
+  ALT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT,  _______,   VIM_W,   
+  SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP,  _______,   _______,   XXXXXXX,   
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* NUMBERS
  * ,-----------------------------------------.                    ,-----------------------------------------.
  * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |      |  .   | DOWN |  %   |  +   |                    |  -   |  =   |  UP  |  ,   |      |      |
+ * |      |      |  .   |   ,  |  -   |  +   |                    |      |  7   |  8   |  9   |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |      |   1  |  2   |  3   |  4   |  5   |-------.    ,-------|  6   |  7   |  8   |  9   |  0   |      |
+ * |      |O_GUI |O_LALT|O_SFT |O_CTL |O_RALT|-------.    ,-------|      |  4   |  5   |  6   |  0   |      |
  * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
- * |      |      |      |  "   |  0   |      |-------|    |-------|      |  /   |   (  |  )   |  _   | LLOCK|
+ * |      |      |      |  =   |      |      |-------|    |-------|      |  1   |   2  |  3   |      |      |
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
@@ -198,9 +202,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_NUM] = LAYOUT(    
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
-  XXXXXXX,   XXXXXXX,   KC_DOT,    KC_DOWN,   KC_PERC,   KC_PLUS,                     KC_MINS,   KC_EQL,    KC_UP,     KC_COLON,  XXXXXXX,   XXXXXXX,
-  XXXXXXX,   NUM_1,     NUM_2,     NUM_3,     NUM_4,     NUM_5,                       NUM_6,     NUM_7,     NUM_8,     NUM_9,     NUM_0,     XXXXXXX,
-  XXXXXXX,   XXXXXXX,   XXXXXXX,   KC_DQT,    KC_ASTR,   XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   KC_SLSH,   KC_LPRN,   KC_RPRN,   KC_UNDS,   LLOCK,
+  XXXXXXX,   XXXXXXX,   KC_DOT,    KC_COMM,   KC_PERC,   KC_PLUS,                     KC_MINS,   KC_7,      KC_8,      KC_9,      XXXXXXX,   XXXXXXX,
+  CT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                      XXXXXXX,   KC_4,      KC_5,      KC_6,      KC_0,      XXXXXXX,
+  CT_SFT_TAB,XXXXXXX,  XXXXXXX,   KC_DQT,    KC_ASTR,   XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   KC_1,      KC_2,      KC_3,      XXXXXXX,   XXXXXXX,
+                       XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,                 _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
+),
+/* ADJ
+ * ,-----------------------------------------.                    ,-----------------------------------------.
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |      |  .   |   ,  |  -   |  +   |                    |      |  7   |  8   |  9   |      |      |
+ * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+ * |      |O_GUI |O_LALT|O_SFT |O_CTL |O_RALT|-------.    ,-------|      |  4   |  5   |  6   |  0   |      |
+ * |------+------+------+------+------+------|  MUTE |    |       |------+------+------+------+------+------|
+ * |      |      |      |  =   |      |      |-------|    |-------|      |  1   |   2  |  3   |      |      |
+ * `-----------------------------------------/       /     \      \-----------------------------------------'
+ *            |      |      |      |  NAV | / BSPC  /       \Space \  |  SYM |      |      |      |
+ *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
+ *            `-----------------------------------'           '------''---------------------------'
+ */
+[_ADJ] = LAYOUT(    
+  XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
+	_______    ,LCTL(KC_1),LCTL(KC_2), LCTL(KC_3),LCTL(KC_4),LCTL(KC_5),     LCTL(KC_6),LCTL(KC_7),LCTL(KC_8),LCTL(KC_9),LCTL(KC_0), _______,
+	_______    ,LALT(KC_1),LALT(KC_2),LALT(KC_3),LALT(KC_4),LALT(KC_5),      LALT(KC_6),LALT(KC_7),LALT(KC_8),LALT(KC_9),LALT(KC_0), _______,
+  XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,    XXXXXXX,   XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX,   XXXXXXX,      XXXXXXX,      XXXXXXX,      XXXXXXX,   XXXXXXX,
                        XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,                 _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 };
@@ -259,6 +284,9 @@ static void print_status_narrow(void) {
             break;
         case _NAV:
             oled_write_P(PSTR("NAV"), false);
+            break;
+        case _ADJ:
+            oled_write_P(PSTR("ADJ"), false);
             break;
         default:
             oled_write_ln_P(PSTR("Undef"), false);
@@ -372,24 +400,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_B);
             }
             return false;
-	case VIM_WQ:
+	case VIM_W:
             if (record->event.pressed) {
-                register_code16(KC_COLON);
+                register_mods(mod_config(MOD_LSFT));
+                register_code(KC_SCLN);
+                unregister_mods(mod_config(MOD_LSFT));
                 register_code(KC_W);
-                register_code(KC_Q);
                 register_code(KC_ENT);
-            } else {
-                unregister_code16(KC_COLON);
+                unregister_code(KC_SCLN);
                 unregister_code(KC_W);
-                unregister_code(KC_Q);
                 unregister_code(KC_ENT);
             }
+
     }
     return true;
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-  return update_tri_layer_state(state, _NAV, _SYM, _NUM);
+  return update_tri_layer_state(state, _NAV, _SYM, _ADJ);
 }
 
 void update_swapper(bool *active, uint16_t cmdish, uint16_t tabish,
