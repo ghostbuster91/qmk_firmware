@@ -71,7 +71,8 @@ bool sft_grv_active = false;
 
 #define CT_TAB LCTL(KC_TAB)
 #define CT_SFT_TAB LCTL(LSFT(KC_TAB))
- 
+#define SFT_TAB LSFT(KC_TAB)
+
 enum sofle_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _CLM,
@@ -90,7 +91,7 @@ enum custom_keycodes {
     KC_NMBR,
     KC_TMUX,
     ALT_TAB,
-    SFT_TAB,
+    ALT_SFT_TAB,
     VIM_W,
     LLOCK,
 };
@@ -162,7 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                      XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
   KC_ESC,    KC_QUOT,   KC_LABK,   KC_RABK,   KC_DQUO,   KC_GRV,                       KC_AMPR,   KC_UNDERSCORE,KC_LBRC,KC_RBRC,   KC_PERC,   XXXXXXX,
   KC_TAB,    KC_EXLM,   KC_MINS,   KC_PLUS,   KC_EQL,    KC_HASH,                      KC_PIPE,   KC_COLON,  KC_LPRN,   KC_RPRN,   KC_SCLN,   XXXXXXX,
-  KC_LSFT,   KC_CIRC,   KC_SLSH,   KC_ASTR,   KC_BSLS,   KC_AT,   KC_MUTE,    XXXXXXX, KC_TILD,   KC_DLR,    KC_LCBR,   KC_RCBR,   KC_QUES,   LLOCK,
+  SFT_TAB,   KC_CIRC,   KC_SLSH,   KC_ASTR,   KC_BSLS,   KC_AT,   KC_MUTE,    XXXXXXX, KC_TILD,   KC_DLR,    KC_LCBR,   KC_RCBR,   KC_QUES,   LLOCK,
             		      XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,    _______, _______, XXXXXXX, XXXXXXX, XXXXXXX 
 ),
 /* NAVIGATION
@@ -183,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,    _______,  KC_COLEMAK, KC_QWERTY, _______,   
   _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       CAPS_WORD,  KC_TAB, 	KC_HOME,  KC_END,    _______,   _______,   
   ALT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT,  _______,   VIM_W,   
-  SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP,  _______,   _______,   XXXXXXX,   
+  ALT_SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP,  _______,   _______,   XXXXXXX,   
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* NUMBERS
@@ -320,8 +321,8 @@ bool oled_task_user(void) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_layer_lock(keycode, record, LLOCK)) { return false; }
-    update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, SFT_TAB, &sft_grv_active, keycode, record);
-    update_swapper(&sft_grv_active, KC_LALT, KC_GRV, SFT_TAB, ALT_TAB, &alt_tab_active, keycode, record);
+    update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, ALT_SFT_TAB, &sft_grv_active, keycode, record);
+    update_swapper(&sft_grv_active, KC_LALT, KC_GRV, ALT_SFT_TAB, ALT_TAB, &alt_tab_active, keycode, record);
     switch (keycode) {
         case KC_QWERTY:
             if (record->event.pressed) {
