@@ -1,5 +1,6 @@
 #include QMK_KEYBOARD_H
 #include "print.h"
+#include "features/achordion.h"
 
 #define HOME_R  LALT_T(KC_R)
 #define HOME_S  LSFT_T(KC_S)
@@ -90,10 +91,6 @@ static td_state_t td_state;
 
 // Function to determine the current tapdance state
 td_state_t cur_dance(qk_tap_dance_state_t *state);
-
-// `finished` and `reset` functions for each tapdance keycode
-void altlp_finished(qk_tap_dance_state_t *state, void *user_data);
-void altlp_reset(qk_tap_dance_state_t *state, void *user_data);
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -228,6 +225,11 @@ bool alt_tab_active = false;
 bool sft_grv_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  // If console is enabled, it will print the matrix position and status of each key pressed
+#ifdef CONSOLE_ENABLE
+    uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
+#endif 
+    if (!process_achordion(keycode, record)) { return false; }
     update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, ALT_SFT_TAB, &sft_grv_active, keycode, record);
     update_swapper(&sft_grv_active, KC_LALT, KC_GRV, ALT_SFT_TAB, ALT_TAB, &alt_tab_active, keycode, record);
     switch (keycode) {
@@ -378,3 +380,27 @@ void guisel_reset(qk_tap_dance_state_t *state, void *user_data) {
 qk_tap_dance_action_t tap_dance_actions[] = {
     [GUI_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, guisel_finished, guisel_reset)
 };
+
+void matrix_scan_user(void) {
+  achordion_task();
+}
+
+bool achordion_chord(uint16_t tap_hold_keycode,
+                     keyrecord_t* tap_hold_record,
+                     uint16_t other_keycode,
+                     keyrecord_t* other_record) {
+  // Exceptionally consider the following chords as holds, even though they are on the same hand
+  switch (tap_hold_keycode) {
+    case HOME_T:  // T + A.
+      if (other_keycode == HOME_A) { return true; }
+      break;
+  }
+
+  // Also allow same-hand holds when the tap_hold_key belongs to thumb cluster  
+  if (tap_hold_record->event.key.row == 7 || tap_hold_record->event.key.row == 3) { 
+        return true; 
+    }
+
+  // Otherwise, follow the opposite hands rule.
+  return achordion_opposite_hands(tap_hold_record, other_record);
+}
