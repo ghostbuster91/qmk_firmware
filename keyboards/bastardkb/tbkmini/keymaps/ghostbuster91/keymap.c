@@ -13,6 +13,20 @@
 #define HOME_M  RALT_T(KC_M)	
 #define HOME_O  RGUI_T(KC_O)	
 
+#define RSTH_R  LGUI_T(KC_R)
+#define RSTH_S  LALT_T(KC_S)
+#define RSTH_T  LSFT_T(KC_T)
+#define RSTH_H  LCTL_T(KC_H)
+#define RSTH_D  RALT_T(KC_D)
+
+#define RSTH_M  RALT_T(KC_M)	
+#define RSTH_N  RCTL_T(KC_N)
+#define RSTH_A  RSFT_T(KC_A)
+#define RSTH_I  LALT_T(KC_I)
+#define RSTH_O  RGUI_T(KC_O)	
+
+#define R_BSPC LT(_NUM, KC_BSPC)
+
 // Home row mods for number layer.
 #define NUM_1 LGUI_T(KC_1)
 #define NUM_2 LALT_T(KC_2)
@@ -44,6 +58,7 @@
 enum tbkmini_layers {
     /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
     _CLM,
+    _RSTHD,
     _NAV,
     _SYM,
     _NUM,
@@ -56,6 +71,7 @@ enum tbkmini_layers {
 enum custom_keycodes {
     KC_QWERTY = SAFE_RANGE,
     KC_COLEMAK,
+    KC_RSTHD,
     KC_NAV,
     KC_SYM,
     KC_NMBR,
@@ -104,6 +120,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
 						 KC_NMBR, BSPC     ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
         //`--------------------------'  `--------------------------'
+
+        ),
+   [_RSTHD] = LAYOUT_split_3x6_3(
+        //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+        KC_TAB     ,XXXXXXX  ,KC_C     ,KC_Y    ,KC_F    ,KC_K			            	,KC_Z   ,KC_L   ,KC_Q    ,KC_U    ,XXXXXXX ,XXXXXXX,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+        KC_ESC     ,RSTH_R   ,RSTH_S   ,RSTH_T  ,RSTH_H  ,RSTH_D                        ,RSTH_M ,RSTH_N ,RSTH_A  ,RSTH_I  ,RSTH_O  ,KC_QUOT,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+	    XXXXXXX    ,KC_J     ,KC_V     ,KC_G    ,KC_P    ,KC_B     			            ,KC_X   ,KC_W   ,KC_COMM ,KC_DOT  ,KC_SLSH ,XXXXXXX  , 
+        //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+						                        R_BSPC,  LT(_NAV,KC_E)   ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
+        //                                    `--------------------------'  `--------------------------'
 
         ),
     [_GAME] = LAYOUT_split_3x6_3(
@@ -172,7 +200,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_FUN] = LAYOUT_split_3x6_3(
 
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-	QK_BOOT     ,_______  ,_______   ,_______   ,_______   ,_______                ,_______ ,KC_F7  ,KC_F8   ,KC_F9   ,KC_F12, _______,
+	QK_BOOT     ,KC_COLEMAK  ,KC_RSTHD   ,_______   ,_______   ,_______                ,_______ ,KC_F7  ,KC_F8   ,KC_F9   ,KC_F12, _______,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 	_______      ,O_GUI    ,O_LALT   ,O_SFT    ,O_CTL    ,O_RALT	       	       ,_______ ,KC_F4  ,KC_F5   ,KC_F6   ,KC_F11, _______,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -236,6 +264,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_COLEMAK:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_CLM);
+            }
+            return false;
+        case KC_RSTHD:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_RSTHD);
             }
             return false;
         case KC_GAME:
