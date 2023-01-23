@@ -1,29 +1,29 @@
 #include QMK_KEYBOARD_H
-#include "print.h"
 #include "features/achordion.h"
+#include "print.h"
 
-#define HOME_R  LALT_T(KC_R)
-#define HOME_S  LSFT_T(KC_S)
-#define HOME_T  LCTL_T(KC_T)
-#define HOME_N  RCTL_T(KC_N)
-#define HOME_E  RSFT_T(KC_E)
-#define HOME_I  LALT_T(KC_I)
-#define HOME_A  LGUI_T(KC_A)
-#define HOME_G  RALT_T(KC_G)
-#define HOME_M  RALT_T(KC_M)	
-#define HOME_O  RGUI_T(KC_O)	
+#define HOME_R LALT_T(KC_R)
+#define HOME_S LSFT_T(KC_S)
+#define HOME_T LCTL_T(KC_T)
+#define HOME_N RCTL_T(KC_N)
+#define HOME_E RSFT_T(KC_E)
+#define HOME_I LALT_T(KC_I)
+#define HOME_A LGUI_T(KC_A)
+#define HOME_G RALT_T(KC_G)
+#define HOME_M RALT_T(KC_M)
+#define HOME_O RGUI_T(KC_O)
 
-#define RSTH_R  LGUI_T(KC_R)
-#define RSTH_S  LALT_T(KC_S)
-#define RSTH_T  LSFT_T(KC_T)
-#define RSTH_H  LCTL_T(KC_H)
-#define RSTH_D  RALT_T(KC_D)
+#define RSTH_R LGUI_T(KC_R)
+#define RSTH_S LALT_T(KC_S)
+#define RSTH_T LSFT_T(KC_T)
+#define RSTH_H LCTL_T(KC_H)
+#define RSTH_D RALT_T(KC_D)
 
-#define RSTH_M  RALT_T(KC_M)	
-#define RSTH_N  RCTL_T(KC_N)
-#define RSTH_A  RSFT_T(KC_A)
-#define RSTH_I  LALT_T(KC_I)
-#define RSTH_O  RGUI_T(KC_O)	
+#define RSTH_M RALT_T(KC_M)
+#define RSTH_N RCTL_T(KC_N)
+#define RSTH_A RSFT_T(KC_A)
+#define RSTH_I LALT_T(KC_I)
+#define RSTH_O RGUI_T(KC_O)
 
 #define R_BSPC LT(_NUM, KC_BSPC)
 
@@ -41,14 +41,14 @@
 
 #define SPACE LT(_SYM, KC_SPC)
 #define BSPC LT(_NAV, KC_BSPC)
-#define DEL LT(_FUN, KC_DEL) 
-#define ENTER RSFT_T(KC_ENT) 
+#define DEL LT(_FUN, KC_DEL)
+#define ENTER RSFT_T(KC_ENT)
 
-#define      O_GUI    OSM(MOD_LGUI)
-#define      O_SFT    OSM(MOD_LSFT)
-#define      O_CTL    OSM(MOD_LCTL)
-#define      O_LALT    OSM(MOD_LALT)
-#define      O_RALT    OSM(MOD_RALT)
+#define O_GUI OSM(MOD_LGUI)
+#define O_SFT OSM(MOD_LSFT)
+#define O_CTL OSM(MOD_LCTL)
+#define O_LALT OSM(MOD_LALT)
+#define O_RALT OSM(MOD_RALT)
 
 #define CT_TAB LCTL(KC_TAB)
 #define CT_SFT_TAB LCTL(LSFT(KC_TAB))
@@ -56,48 +56,47 @@
 #define SFT_TAB LSFT(KC_TAB)
 
 enum tbkmini_layers {
-    /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
-    _CLM,
-    _RSTHD,
-    _NAV,
-    _SYM,
-    _NUM,
-    _ADJ,
-    _FUN,
-    _GAME,
-    _GAME2
+  /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
+  _CLM,
+  _RSTHD,
+  _NAV,
+  _SYM,
+  _NUM,
+  _ADJ,
+  _FUN,
+  _GAME,
+  _GAME2
 };
 
 enum custom_keycodes {
-    KC_QWERTY = SAFE_RANGE,
-    KC_COLEMAK,
-    KC_RSTHD,
-    KC_NAV,
-    KC_SYM,
-    KC_NMBR,
-    KC_TMUX,
-    KC_FUN,
-    ALT_TAB,
-    ALT_SFT_TAB,
-    KC_SFT_TAB,
-    VIM_W,
-    LLOCK,
-    KC_GAME,
-    KC_GAME2
+  KC_QWERTY = SAFE_RANGE,
+  KC_COLEMAK,
+  KC_RSTHD,
+  KC_NAV,
+  KC_SYM,
+  KC_NMBR,
+  KC_TMUX,
+  KC_FUN,
+  ALT_TAB,
+  ALT_SFT_TAB,
+  KC_SFT_TAB,
+  VIM_W,
+  LLOCK,
+  KC_GAME,
+  KC_GAME2
 };
-
 
 // Tap Dance keycodes
 enum td_keycodes {
-    GUI_SEL // `LGUI` when held, `LCTL(A)` when tapped.
+  GUI_SEL // `LGUI` when held, `LCTL(A)` when tapped.
 };
 
 // Define a type containing as many tapdance states as you need
 typedef enum {
-    TD_NONE,
-    TD_UNKNOWN,
-    TD_SINGLE_TAP,
-    TD_SINGLE_HOLD,
+  TD_NONE,
+  TD_UNKNOWN,
+  TD_SINGLE_TAP,
+  TD_SINGLE_HOLD,
 } td_state_t;
 
 // Create a global instance of the tapdance state type
@@ -108,6 +107,7 @@ static td_state_t td_state;
 // Function to determine the current tapdance state
 td_state_t cur_dance(qk_tap_dance_state_t *state);
 
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_CLM] = LAYOUT_split_3x6_3(
@@ -222,9 +222,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	//`--------------------------'  `--------------------------'
         )
 };
+// clang-format on
 
 void update_swapper(bool *active, uint16_t cmdish, uint16_t tabish,
-                    uint16_t trigger, uint16_t prv, bool *other_active, uint16_t keycode, keyrecord_t *record) {
+                    uint16_t trigger, uint16_t prv, bool *other_active,
+                    uint16_t keycode, keyrecord_t *record) {
   if (keycode == trigger && !*other_active) {
     if (record->event.pressed) {
       if (!*active) {
@@ -238,9 +240,9 @@ void update_swapper(bool *active, uint16_t cmdish, uint16_t tabish,
     }
   } else if (keycode == prv && *active) {
     if (record->event.pressed) {
-	register_code16(S(tabish));
+      register_code16(S(tabish));
     } else {
-        unregister_code16(S(tabish));
+      unregister_code16(S(tabish));
     }
   } else if (*active) {
     // On non-ignored keyup, disable swapper
@@ -253,114 +255,123 @@ bool alt_tab_active = false;
 bool sft_grv_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  // If console is enabled, it will print the matrix position and status of each key pressed
+  // If console is enabled, it will print the matrix position and status of each
+  // key pressed
 #ifdef CONSOLE_ENABLE
-    uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
-#endif 
-    if (!process_achordion(keycode, record)) { return false; }
-    update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, ALT_SFT_TAB, &sft_grv_active, keycode, record);
-    update_swapper(&sft_grv_active, KC_LALT, KC_GRV, ALT_SFT_TAB, ALT_TAB, &alt_tab_active, keycode, record);
-    switch (keycode) {
-        case KC_COLEMAK:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_CLM);
-            }
-            return false;
-        case KC_RSTHD:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_RSTHD);
-            }
-            return false;
-        case KC_GAME:
-            if (record->event.pressed) {
-                set_single_persistent_default_layer(_GAME);
-            }
-            return false;
-        case KC_NAV:
-            if (record->event.pressed) {
-                layer_on(_NAV);
-            } else {
-                layer_off(_NAV);
-            }
-            return false;
-        case KC_SYM:
-            if (record->event.pressed) {
-                layer_on(_SYM);
-            } else {
-                layer_off(_SYM);
-            }
-            return false;
-        case KC_NMBR:
-            if (record->event.pressed) {
-                layer_on(_NUM);
-            } else {
-                layer_off(_NUM);
-            }
-            return false;
-	case KC_GAME2:
-            if (record->event.pressed) {
-                layer_on(_GAME2);
-            } else {
-                layer_off(_GAME2);
-            }
-            return false;
-	case KC_FUN:
-            if (record->event.pressed) {
-                layer_on(_FUN);
-            } else {
-                layer_off(_FUN);
-            }
-            return false;
-        case KC_COPY:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LCTL));
-                register_code(KC_C);
-            } else {
-                unregister_mods(mod_config(MOD_LCTL));
-                unregister_code(KC_C);
-            }
-            return false;
-        case KC_PASTE:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LCTL));
-                register_code(KC_V);
-            } else {
-                unregister_mods(mod_config(MOD_LCTL));
-                unregister_code(KC_V);
-            }
-            return false;
-        case KC_CUT:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LCTL));
-                register_code(KC_X);
-            } else {
-                unregister_mods(mod_config(MOD_LCTL));
-                unregister_code(KC_X);
-            }
-            return false;
-            break;
-        case KC_UNDO:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LCTL));
-                register_code(KC_Z);
-            } else {
-                unregister_mods(mod_config(MOD_LCTL));
-                unregister_code(KC_Z);
-            }
-            return false;
-	case VIM_W:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LSFT));
-                register_code(KC_SCLN);
-                unregister_mods(mod_config(MOD_LSFT));
-                register_code(KC_W);
-                register_code(KC_ENT);
-                unregister_code(KC_SCLN);
-                unregister_code(KC_W);
-                unregister_code(KC_ENT);
-            } 
+  uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: "
+          "%u, count: %u\n",
+          keycode, record->event.key.col, record->event.key.row,
+          record->event.pressed, record->event.time, record->tap.interrupted,
+          record->tap.count);
+#endif
+  if (!process_achordion(keycode, record)) {
+    return false;
+  }
+  update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, ALT_SFT_TAB,
+                 &sft_grv_active, keycode, record);
+  update_swapper(&sft_grv_active, KC_LALT, KC_GRV, ALT_SFT_TAB, ALT_TAB,
+                 &alt_tab_active, keycode, record);
+  switch (keycode) {
+  case KC_COLEMAK:
+    if (record->event.pressed) {
+      set_single_persistent_default_layer(_CLM);
     }
-    return true;
+    return false;
+  case KC_RSTHD:
+    if (record->event.pressed) {
+      set_single_persistent_default_layer(_RSTHD);
+    }
+    return false;
+  case KC_GAME:
+    if (record->event.pressed) {
+      set_single_persistent_default_layer(_GAME);
+    }
+    return false;
+  case KC_NAV:
+    if (record->event.pressed) {
+      layer_on(_NAV);
+    } else {
+      layer_off(_NAV);
+    }
+    return false;
+  case KC_SYM:
+    if (record->event.pressed) {
+      layer_on(_SYM);
+    } else {
+      layer_off(_SYM);
+    }
+    return false;
+  case KC_NMBR:
+    if (record->event.pressed) {
+      layer_on(_NUM);
+    } else {
+      layer_off(_NUM);
+    }
+    return false;
+  case KC_GAME2:
+    if (record->event.pressed) {
+      layer_on(_GAME2);
+    } else {
+      layer_off(_GAME2);
+    }
+    return false;
+  case KC_FUN:
+    if (record->event.pressed) {
+      layer_on(_FUN);
+    } else {
+      layer_off(_FUN);
+    }
+    return false;
+  case KC_COPY:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_C);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_C);
+    }
+    return false;
+  case KC_PASTE:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_V);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_V);
+    }
+    return false;
+  case KC_CUT:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_X);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_X);
+    }
+    return false;
+    break;
+  case KC_UNDO:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_Z);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_Z);
+    }
+    return false;
+  case VIM_W:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LSFT));
+      register_code(KC_SCLN);
+      unregister_mods(mod_config(MOD_LSFT));
+      register_code(KC_W);
+      register_code(KC_ENT);
+      unregister_code(KC_SCLN);
+      unregister_code(KC_W);
+      unregister_code(KC_ENT);
+    }
+  }
+  return true;
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -371,68 +382,74 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 // Determine the tapdance state to return
 td_state_t cur_dance(qk_tap_dance_state_t *state) {
-    if (state->count == 1) {
-        if (state->interrupted || !state->pressed) return TD_SINGLE_TAP;
-        else return TD_SINGLE_HOLD;
-    }
-    else return TD_UNKNOWN; // Any number higher than the maximum state value you return above
+  if (state->count == 1) {
+    if (state->interrupted || !state->pressed)
+      return TD_SINGLE_TAP;
+    else
+      return TD_SINGLE_HOLD;
+  } else
+    return TD_UNKNOWN; // Any number higher than the maximum state value you
+                       // return above
 }
 
 // Handle the possible states for each tapdance keycode you define:
 
 void guisel_finished(qk_tap_dance_state_t *state, void *user_data) {
-    td_state = cur_dance(state);
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            register_mods(MOD_BIT(KC_LCTL));
-            register_code16(KC_A);
-            break;
-        case TD_SINGLE_HOLD:
-            register_mods(MOD_BIT(KC_LGUI)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
-            break;
-        default:
-            break;
-    }
+  td_state = cur_dance(state);
+  switch (td_state) {
+  case TD_SINGLE_TAP:
+    register_mods(MOD_BIT(KC_LCTL));
+    register_code16(KC_A);
+    break;
+  case TD_SINGLE_HOLD:
+    register_mods(MOD_BIT(
+        KC_LGUI)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
+    break;
+  default:
+    break;
+  }
 }
 
 void guisel_reset(qk_tap_dance_state_t *state, void *user_data) {
-    switch (td_state) {
-        case TD_SINGLE_TAP:
-            unregister_code16(KC_A);
-            unregister_mods(MOD_BIT(KC_LCTL));
-            break;
-        case TD_SINGLE_HOLD:
-            unregister_mods(MOD_BIT(KC_LGUI)); // For a layer-tap key, use `layer_off(_MY_LAYER)` here
-            break;
-        default:
-            break;
-    }
+  switch (td_state) {
+  case TD_SINGLE_TAP:
+    unregister_code16(KC_A);
+    unregister_mods(MOD_BIT(KC_LCTL));
+    break;
+  case TD_SINGLE_HOLD:
+    unregister_mods(MOD_BIT(
+        KC_LGUI)); // For a layer-tap key, use `layer_off(_MY_LAYER)` here
+    break;
+  default:
+    break;
+  }
 }
 
-// Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in `finished` and `reset` functions
+// Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in
+// `finished` and `reset` functions
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [GUI_SEL] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, guisel_finished, guisel_reset)
-};
+    [GUI_SEL] =
+        ACTION_TAP_DANCE_FN_ADVANCED(NULL, guisel_finished, guisel_reset)};
 
-void matrix_scan_user(void) {
-  achordion_task();
-}
+void matrix_scan_user(void) { achordion_task(); }
 
-bool achordion_chord(uint16_t tap_hold_keycode,
-                     keyrecord_t* tap_hold_record,
-                     uint16_t other_keycode,
-                     keyrecord_t* other_record) {
-  // Exceptionally consider the following chords as holds, even though they are on the same hand
+bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record,
+                     uint16_t other_keycode, keyrecord_t *other_record) {
+  // Exceptionally consider the following chords as holds, even though they are
+  // on the same hand
   switch (tap_hold_keycode) {
-    case HOME_T:  // T + A.
-      if (other_keycode == HOME_A) { return true; }
-      break;
+  case HOME_T: // T + A.
+    if (other_keycode == HOME_A) {
+      return true;
+    }
+    break;
   }
 
-  // Also allow same-hand holds when the tap_hold_key belongs to thumb cluster  
-  if (tap_hold_record->event.key.row == 7 || tap_hold_record->event.key.row == 3) { 
-        return true; 
-    }
+  // Also allow same-hand holds when the tap_hold_key belongs to thumb cluster
+  if (tap_hold_record->event.key.row == 7 ||
+      tap_hold_record->event.key.row == 3) {
+    return true;
+  }
 
   // Otherwise, follow the opposite hands rule.
   return achordion_opposite_hands(tap_hold_record, other_record);
