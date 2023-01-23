@@ -86,27 +86,6 @@ enum custom_keycodes {
   KC_GAME2
 };
 
-// Tap Dance keycodes
-enum td_keycodes {
-  GUI_SEL // `LGUI` when held, `LCTL(A)` when tapped.
-};
-
-// Define a type containing as many tapdance states as you need
-typedef enum {
-  TD_NONE,
-  TD_UNKNOWN,
-  TD_SINGLE_TAP,
-  TD_SINGLE_HOLD,
-} td_state_t;
-
-// Create a global instance of the tapdance state type
-static td_state_t td_state;
-
-// Declare your tapdance functions:
-
-// Function to determine the current tapdance state
-td_state_t cur_dance(qk_tap_dance_state_t *state);
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -165,7 +144,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
 	_______ ,_______ ,_______ ,_______ ,_______ ,_______  		     	     ,_______   ,_______  ,KC_HOME  ,KC_END   ,_______  ,_______  ,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-	ALT_TAB    ,TD(GUI_SEL)    ,O_LALT   ,O_SFT    ,O_CTL    ,O_RALT   		     ,KC_LEFT   ,KC_DOWN  ,KC_UP    ,KC_RIGHT ,_______  ,VIM_W   ,
+	ALT_TAB    ,O_GUI    ,O_LALT   ,O_SFT    ,O_CTL    ,O_RALT   		     ,KC_LEFT   ,KC_DOWN  ,KC_UP    ,KC_RIGHT ,_______  ,VIM_W   ,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 	ALT_SFT_TAB,KC_UNDO  ,KC_CUT   ,KC_COPY  ,KC_PASTE ,_______  		     ,KC_PSCR   ,KC_PGDN,KC_PGUP  ,_______  ,_______  ,_______  ,
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -379,57 +358,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   uprintf("%d layer\n", state);
   return state;
 }
-
-// Determine the tapdance state to return
-td_state_t cur_dance(qk_tap_dance_state_t *state) {
-  if (state->count == 1) {
-    if (state->interrupted || !state->pressed)
-      return TD_SINGLE_TAP;
-    else
-      return TD_SINGLE_HOLD;
-  } else
-    return TD_UNKNOWN; // Any number higher than the maximum state value you
-                       // return above
-}
-
-// Handle the possible states for each tapdance keycode you define:
-
-void guisel_finished(qk_tap_dance_state_t *state, void *user_data) {
-  td_state = cur_dance(state);
-  switch (td_state) {
-  case TD_SINGLE_TAP:
-    register_mods(MOD_BIT(KC_LCTL));
-    register_code16(KC_A);
-    break;
-  case TD_SINGLE_HOLD:
-    register_mods(MOD_BIT(
-        KC_LGUI)); // For a layer-tap key, use `layer_on(_MY_LAYER)` here
-    break;
-  default:
-    break;
-  }
-}
-
-void guisel_reset(qk_tap_dance_state_t *state, void *user_data) {
-  switch (td_state) {
-  case TD_SINGLE_TAP:
-    unregister_code16(KC_A);
-    unregister_mods(MOD_BIT(KC_LCTL));
-    break;
-  case TD_SINGLE_HOLD:
-    unregister_mods(MOD_BIT(
-        KC_LGUI)); // For a layer-tap key, use `layer_off(_MY_LAYER)` here
-    break;
-  default:
-    break;
-  }
-}
-
-// Define `ACTION_TAP_DANCE_FN_ADVANCED()` for each tapdance keycode, passing in
-// `finished` and `reset` functions
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [GUI_SEL] =
-        ACTION_TAP_DANCE_FN_ADVANCED(NULL, guisel_finished, guisel_reset)};
 
 void matrix_scan_user(void) { achordion_task(); }
 
