@@ -2,24 +2,24 @@
 #include "features/achordion.h"
 
 enum layers {
-    _COLEMAK_DH=0,
-    _NAV,
-    _SYM,
-    _FUN,
-    _ADJ,
-    _NUM,
+  _COLEMAK_DH = 0,
+  _NAV,
+  _SYM,
+  _FUN,
+  _ADJ,
+  _NUM,
 };
 
-#define HOME_R  LALT_T(KC_R)
-#define HOME_S  LSFT_T(KC_S)
-#define HOME_T  LCTL_T(KC_T)
-#define HOME_N  RCTL_T(KC_N)
-#define HOME_E  RSFT_T(KC_E)
-#define HOME_I  LALT_T(KC_I)
-#define HOME_A  LGUI_T(KC_A)
-#define HOME_G  RALT_T(KC_G)
-#define HOME_M  RALT_T(KC_M)	
-#define HOME_O  RGUI_T(KC_O)	
+#define HOME_R LALT_T(KC_R)
+#define HOME_S LSFT_T(KC_S)
+#define HOME_T LCTL_T(KC_T)
+#define HOME_N RCTL_T(KC_N)
+#define HOME_E RSFT_T(KC_E)
+#define HOME_I LALT_T(KC_I)
+#define HOME_A LGUI_T(KC_A)
+#define HOME_G RALT_T(KC_G)
+#define HOME_M RALT_T(KC_M)
+#define HOME_O RGUI_T(KC_O)
 
 // Home row mods for number layer.
 #define NUM_1 LGUI_T(KC_1)
@@ -35,14 +35,14 @@ enum layers {
 
 #define SPACE LT(_SYM, KC_SPC)
 #define BSPC LT(_NAV, KC_BSPC)
-#define DEL LT(_FUN, KC_DEL) 
-#define ENTER RSFT_T(KC_ENT) 
+#define DEL LT(_FUN, KC_DEL)
+#define ENTER RSFT_T(KC_ENT)
 
-#define      O_GUI    OSM(MOD_LGUI)
-#define      O_SFT    OSM(MOD_LSFT)
-#define      O_CTL    OSM(MOD_LCTL)
-#define      O_LALT    OSM(MOD_LALT)
-#define      O_RALT    OSM(MOD_RALT)
+#define O_GUI OSM(MOD_LGUI)
+#define O_SFT OSM(MOD_LSFT)
+#define O_CTL OSM(MOD_LCTL)
+#define O_LALT OSM(MOD_LALT)
+#define O_RALT OSM(MOD_RALT)
 
 #define CT_TAB LCTL(KC_TAB)
 #define CT_SFT_TAB LCTL(LSFT(KC_TAB))
@@ -50,16 +50,16 @@ enum layers {
 #define SFT_TAB LSFT(KC_TAB)
 
 enum custom_keycodes {
-    KC_QWERTY = SAFE_RANGE,
-    KC_NAV,
-    KC_SYM,
-    KC_NMBR,
-    KC_TMUX,
-    KC_FUN,
-    ALT_TAB,
-    ALT_SFT_TAB,
-    KC_SFT_TAB,
-    VIM_W 
+  KC_QWERTY = SAFE_RANGE,
+  KC_NAV,
+  KC_SYM,
+  KC_NMBR,
+  KC_TMUX,
+  KC_FUN,
+  ALT_TAB,
+  ALT_SFT_TAB,
+  KC_SFT_TAB,
+  VIM_W
 };
 
 // clang-format off
@@ -116,7 +116,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 void update_swapper(bool *active, uint16_t cmdish, uint16_t tabish,
-                    uint16_t trigger, uint16_t prv, bool *other_active, uint16_t keycode, keyrecord_t *record) {
+                    uint16_t trigger, uint16_t prv, bool *other_active,
+                    uint16_t keycode, keyrecord_t *record) {
   if (keycode == trigger && !*other_active) {
     if (record->event.pressed) {
       if (!*active) {
@@ -130,9 +131,9 @@ void update_swapper(bool *active, uint16_t cmdish, uint16_t tabish,
     }
   } else if (keycode == prv && *active) {
     if (record->event.pressed) {
-	register_code16(S(tabish));
+      register_code16(S(tabish));
     } else {
-        unregister_code16(S(tabish));
+      unregister_code16(S(tabish));
     }
   } else if (*active) {
     // On non-ignored keyup, disable swapper
@@ -141,126 +142,134 @@ void update_swapper(bool *active, uint16_t cmdish, uint16_t tabish,
   }
 }
 
-
 bool alt_tab_active = false;
 bool sft_grv_active = false;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  // If console is enabled, it will print the matrix position and status of each key pressed
+  // If console is enabled, it will print the matrix position and status of each
+  // key pressed
 #ifdef CONSOLE_ENABLE
-    uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
-#endif 
-    if (!process_achordion(keycode, record)) { return false; }
-    update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, ALT_SFT_TAB, &sft_grv_active, keycode, record);
-    update_swapper(&sft_grv_active, KC_LALT, KC_GRV, ALT_SFT_TAB, ALT_TAB, &alt_tab_active, keycode, record);
-    switch (keycode) {
-        case KC_NAV:
-            if (record->event.pressed) {
-                layer_on(_NAV);
-            } else {
-                layer_off(_NAV);
-            }
-            return false;
-        case KC_SYM:
-            if (record->event.pressed) {
-                layer_on(_SYM);
-            } else {
-                layer_off(_SYM);
-            }
-            return false;
-        case KC_NMBR:
-            if (record->event.pressed) {
-                layer_on(_NUM);
-            } else {
-                layer_off(_NUM);
-            }
-            return false;
-	case KC_FUN:
-            if (record->event.pressed) {
-                layer_on(_FUN);
-            } else {
-                layer_off(_FUN);
-            }
-            return false;
-        case KC_COPY:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LCTL));
-                register_code(KC_C);
-            } else {
-                unregister_mods(mod_config(MOD_LCTL));
-                unregister_code(KC_C);
-            }
-            return false;
-        case KC_PASTE:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LCTL));
-                register_code(KC_V);
-            } else {
-                unregister_mods(mod_config(MOD_LCTL));
-                unregister_code(KC_V);
-            }
-            return false;
-        case KC_CUT:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LCTL));
-                register_code(KC_X);
-            } else {
-                unregister_mods(mod_config(MOD_LCTL));
-                unregister_code(KC_X);
-            }
-            return false;
-            break;
-        case KC_UNDO:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LCTL));
-                register_code(KC_Z);
-            } else {
-                unregister_mods(mod_config(MOD_LCTL));
-                unregister_code(KC_Z);
-            }
-            return false;
-	case VIM_W:
-            if (record->event.pressed) {
-                register_mods(mod_config(MOD_LSFT));
-                register_code(KC_SCLN);
-                unregister_mods(mod_config(MOD_LSFT));
-                register_code(KC_W);
-                register_code(KC_ENT);
-                unregister_code(KC_SCLN);
-                unregister_code(KC_W);
-                unregister_code(KC_ENT);
-            } 
+  uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: "
+          "%u, count: %u\n",
+          keycode, record->event.key.col, record->event.key.row,
+          record->event.pressed, record->event.time, record->tap.interrupted,
+          record->tap.count);
+#endif
+  if (!process_achordion(keycode, record)) {
+    return false;
+  }
+  update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, ALT_SFT_TAB,
+                 &sft_grv_active, keycode, record);
+  update_swapper(&sft_grv_active, KC_LALT, KC_GRV, ALT_SFT_TAB, ALT_TAB,
+                 &alt_tab_active, keycode, record);
+  switch (keycode) {
+  case KC_NAV:
+    if (record->event.pressed) {
+      layer_on(_NAV);
+    } else {
+      layer_off(_NAV);
     }
-    return true;
+    return false;
+  case KC_SYM:
+    if (record->event.pressed) {
+      layer_on(_SYM);
+    } else {
+      layer_off(_SYM);
+    }
+    return false;
+  case KC_NMBR:
+    if (record->event.pressed) {
+      layer_on(_NUM);
+    } else {
+      layer_off(_NUM);
+    }
+    return false;
+  case KC_FUN:
+    if (record->event.pressed) {
+      layer_on(_FUN);
+    } else {
+      layer_off(_FUN);
+    }
+    return false;
+  case KC_COPY:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_C);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_C);
+    }
+    return false;
+  case KC_PASTE:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_V);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_V);
+    }
+    return false;
+  case KC_CUT:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_X);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_X);
+    }
+    return false;
+    break;
+  case KC_UNDO:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_Z);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_Z);
+    }
+    return false;
+  case VIM_W:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LSFT));
+      register_code(KC_SCLN);
+      unregister_mods(mod_config(MOD_LSFT));
+      register_code(KC_W);
+      register_code(KC_ENT);
+      unregister_code(KC_SCLN);
+      unregister_code(KC_W);
+      unregister_code(KC_ENT);
+    }
+  }
+  return true;
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   state = update_tri_layer_state(state, _NAV, _SYM, _ADJ);
-  #ifdef CONSOLE_ENABLE
-    uprintf("%d layer\n", state);
-  #endif
+#ifdef CONSOLE_ENABLE
+  uprintf("%d layer\n", state);
+#endif
   return state;
 }
 
-void matrix_scan_user(void) {
-  achordion_task();
-}
+void matrix_scan_user(void) { achordion_task(); }
 
-bool achordion_chord(uint16_t tap_hold_keycode,
-                     keyrecord_t* tap_hold_record,
-                     uint16_t other_keycode,
-                     keyrecord_t* other_record) {
-  // Exceptionally consider the following chords as holds, even though they are on the same hand
+bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record,
+                     uint16_t other_keycode, keyrecord_t *other_record) {
+  // Exceptionally consider the following chords as holds, even though they are
+  // on the same hand
   switch (tap_hold_keycode) {
-    case HOME_T:  // T + A.
-      if (other_keycode == HOME_A) { return true; }
-      break;
+  case HOME_T: // T + A.
+    if (other_keycode == HOME_A) {
+      return true;
+    }
+    break;
   }
 
-  // Also allow same-hand holds when the tap_hold_key belongs to thumb cluster  
-  if (tap_hold_record->event.key.row == 7 || tap_hold_record->event.key.row == 3) { 
-        return true; 
-    }
+  // Also allow same-hand holds when the tap_hold_key belongs to thumb cluster
+  if (tap_hold_record->event.key.row == 7 ||
+      tap_hold_record->event.key.row == 3) {
+    return true;
+  }
 
   // Otherwise, follow the opposite hands rule.
   return achordion_opposite_hands(tap_hold_record, other_record);
@@ -269,50 +278,53 @@ bool achordion_chord(uint16_t tap_hold_keycode,
 #ifdef OLED_ENABLE
 
 bool oled_task_user(void) {
-    if (is_keyboard_master()) {
-        // QMK Logo and version information
-        // clang-format off
+  if (is_keyboard_master()) {
+    // QMK Logo and version information
+    // clang-format off
         static const char PROGMEM qmk_logo[] = {
             0x80,0x81,0x82,0x83,0x84,0x85,0x86,0x87,0x88,0x89,0x8a,0x8b,0x8c,0x8d,0x8e,0x8f,0x90,0x91,0x92,0x93,0x94,
             0xa0,0xa1,0xa2,0xa3,0xa4,0xa5,0xa6,0xa7,0xa8,0xa9,0xaa,0xab,0xac,0xad,0xae,0xaf,0xb0,0xb1,0xb2,0xb3,0xb4,
             0xc0,0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0,0xd1,0xd2,0xd3,0xd4,0};
-        // clang-format on
+    // clang-format on
 
-        oled_write_P(qmk_logo, false);
-        oled_write_P(PSTR("Kyria "), false);
-        oled_write_P(PSTR("rev3\n\n"), false);
-        // Host Keyboard Layer Status
-        oled_write_P(PSTR("Layer: "), false);
-        switch (get_highest_layer(layer_state | default_layer_state)) {
-            case 0:
-                oled_write_P(PSTR("Colemak-DH\n"), false);
-                break;
-            case 1:
-                oled_write_P(PSTR("Nav\n"), false);
-                break;
-            case 2:
-                oled_write_P(PSTR("Sym\n"), false);
-                break;
-            case 4:
-                oled_write_P(PSTR("Num\n"), false);
-                break;
-            case 5:
-                oled_write_P(PSTR("Fun\n"), false);
-                break;
-            case 6:
-                oled_write_P(PSTR("Adj\n"), false);
-                break;
-            default:
-                oled_write_P(PSTR("Undefined\n"), false);
-        }
+    oled_write_P(qmk_logo, false);
+    oled_write_P(PSTR("Kyria "), false);
+    oled_write_P(PSTR("rev3\n\n"), false);
+    // Host Keyboard Layer Status
+    oled_write_P(PSTR("Layer: "), false);
+    switch (get_highest_layer(layer_state | default_layer_state)) {
+    case 0:
+      oled_write_P(PSTR("Colemak-DH\n"), false);
+      break;
+    case 1:
+      oled_write_P(PSTR("Nav\n"), false);
+      break;
+    case 2:
+      oled_write_P(PSTR("Sym\n"), false);
+      break;
+    case 4:
+      oled_write_P(PSTR("Num\n"), false);
+      break;
+    case 5:
+      oled_write_P(PSTR("Fun\n"), false);
+      break;
+    case 6:
+      oled_write_P(PSTR("Adj\n"), false);
+      break;
+    default:
+      oled_write_P(PSTR("Undefined\n"), false);
+    }
 
-        // Host Keyboard LED Status
-        led_t led_usb_state = host_keyboard_led_state();
-        oled_write_P(led_usb_state.num_lock ? PSTR("NUMLCK ") : PSTR("       "), false);
-        oled_write_P(led_usb_state.caps_lock ? PSTR("CAPLCK ") : PSTR("       "), false);
-        oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "), false);
-    } else {
-        // clang-format off
+    // Host Keyboard LED Status
+    led_t led_usb_state = host_keyboard_led_state();
+    oled_write_P(led_usb_state.num_lock ? PSTR("NUMLCK ") : PSTR("       "),
+                 false);
+    oled_write_P(led_usb_state.caps_lock ? PSTR("CAPLCK ") : PSTR("       "),
+                 false);
+    oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "),
+                 false);
+  } else {
+    // clang-format off
         static const char PROGMEM kyria_logo[] = {
             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,192,224,240,112,120, 56, 60, 28, 30, 14, 14, 14,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 14, 14, 14, 30, 28, 60, 56,120,112,240,224,192,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
             0,  0,  0,  0,  0,  0,  0,192,224,240,124, 62, 31, 15,  7,  3,  1,128,192,224,240,120, 56, 60, 28, 30, 14, 14,  7,  7,135,231,127, 31,255,255, 31,127,231,135,  7,  7, 14, 14, 30, 28, 60, 56,120,240,224,192,128,  1,  3,  7, 15, 31, 62,124,240,224,192,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -323,9 +335,9 @@ bool oled_task_user(void) {
             0,  0,  0,  0,  0,  0,  0,  3,  7, 15, 62,124,248,240,224,192,128,  1,  3,  7, 15, 30, 28, 60, 56,120,112,112,224,224,225,231,254,248,255,255,248,254,231,225,224,224,112,112,120, 56, 60, 28, 30, 15,  7,  3,  1,128,192,224,240,248,124, 62, 15,  7,  3,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
             0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  3,  7, 15, 14, 30, 28, 60, 56,120,112,112,112,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,224,112,112,112,120, 56, 60, 28, 30, 14, 15,  7,  3,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0
         };
-        // clang-format on
-        oled_write_raw_P(kyria_logo, sizeof(kyria_logo));
-    }
-    return false;
+    // clang-format on
+    oled_write_raw_P(kyria_logo, sizeof(kyria_logo));
+  }
+  return false;
 }
 #endif
