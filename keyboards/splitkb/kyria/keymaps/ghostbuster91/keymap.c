@@ -1,4 +1,5 @@
 #include QMK_KEYBOARD_H
+#include "features/achordion.h"
 
 enum layers {
     _COLEMAK_DH=0,
@@ -149,6 +150,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 #ifdef CONSOLE_ENABLE
     uprintf("KL: kc: 0x%04X, col: %2u, row: %2u, pressed: %u, time: %5u, int: %u, count: %u\n", keycode, record->event.key.col, record->event.key.row, record->event.pressed, record->event.time, record->tap.interrupted, record->tap.count);
 #endif 
+    if (!process_achordion(keycode, record)) { return false; }
     update_swapper(&alt_tab_active, KC_LALT, KC_TAB, ALT_TAB, ALT_SFT_TAB, &sft_grv_active, keycode, record);
     update_swapper(&sft_grv_active, KC_LALT, KC_GRV, ALT_SFT_TAB, ALT_TAB, &alt_tab_active, keycode, record);
     switch (keycode) {
@@ -238,6 +240,30 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     uprintf("%d layer\n", state);
   #endif
   return state;
+}
+
+void matrix_scan_user(void) {
+  achordion_task();
+}
+
+bool achordion_chord(uint16_t tap_hold_keycode,
+                     keyrecord_t* tap_hold_record,
+                     uint16_t other_keycode,
+                     keyrecord_t* other_record) {
+  // Exceptionally consider the following chords as holds, even though they are on the same hand
+  switch (tap_hold_keycode) {
+    case HOME_T:  // T + A.
+      if (other_keycode == HOME_A) { return true; }
+      break;
+  }
+
+  // Also allow same-hand holds when the tap_hold_key belongs to thumb cluster  
+  if (tap_hold_record->event.key.row == 7 || tap_hold_record->event.key.row == 3) { 
+        return true; 
+    }
+
+  // Otherwise, follow the opposite hands rule.
+  return achordion_opposite_hands(tap_hold_record, other_record);
 }
 
 #ifdef OLED_ENABLE
