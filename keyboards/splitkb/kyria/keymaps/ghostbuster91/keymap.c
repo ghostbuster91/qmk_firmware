@@ -2,7 +2,8 @@
 #include "features/achordion.h"
 
 enum layers {
-  _COLEMAK_DH = 0,
+  _CLM = 0,
+  _RSTHD,
   _NAV,
   _SYM,
   _FUN,
@@ -37,6 +38,21 @@ enum layers {
 #define BSPC LT(_NAV, KC_BSPC)
 #define DEL LT(_FUN, KC_DEL)
 #define ENTER RSFT_T(KC_ENT)
+#define R_E LT(_NAV, KC_E)
+
+#define RSTH_R LGUI_T(KC_R)
+#define RSTH_S LALT_T(KC_S)
+#define RSTH_T LSFT_T(KC_T)
+#define RSTH_H LCTL_T(KC_H)
+#define RSTH_D RALT_T(KC_D)
+
+#define RSTH_M RALT_T(KC_M)
+#define RSTH_N RCTL_T(KC_N)
+#define RSTH_A RSFT_T(KC_A)
+#define RSTH_I LALT_T(KC_I)
+#define RSTH_O RGUI_T(KC_O)
+
+#define R_BSPC LT(_NUM, KC_BSPC)
 
 #define O_GUI OSM(MOD_LGUI)
 #define O_SFT OSM(MOD_LSFT)
@@ -54,22 +70,31 @@ enum custom_keycodes {
   KC_NAV,
   KC_SYM,
   KC_NMBR,
-  KC_TMUX,
   KC_FUN,
   ALT_TAB,
   ALT_SFT_TAB,
   KC_SFT_TAB,
-  VIM_W
+  VIM_W,
+  KC_COLEMAK,
+  KC_RSTHD
 };
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
-    [_COLEMAK_DH] = LAYOUT(
+    [_CLM] = LAYOUT(
      KC_TAB  , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,                                        KC_J , KC_L   ,  KC_U  ,   KC_Y ,KC_SCLN, XXXXXXX,
      KC_ESC  ,HOME_A,  HOME_R , HOME_S ,  HOME_T,  HOME_G,                                       HOME_M, HOME_N ,HOME_E  ,HOME_I  ,HOME_O , KC_QUOT,
      XXXXXXX , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , XXXXXXX,XXXXXXX,   XXXXXXX, XXXXXXX,   KC_K ,   KC_H ,KC_COMM , KC_DOT ,KC_SLSH, XXXXXXX,
                                 XXXXXXX, XXXXXXX, KC_NMBR, BSPC   ,DEL    ,     ENTER,  SPACE , XXXXXXX, XXXXXXX,XXXXXXX
+    ),
+
+
+    [_RSTHD] = LAYOUT(
+     KC_TAB  ,XXXXXXX,KC_C    ,KC_Y    ,KC_F    ,KC_K	 ,                                       KC_Z  , KC_L   ,KC_Q    ,KC_U    ,XXXXXXX, XXXXXXX,
+     KC_ESC  ,RSTH_R ,RSTH_S  ,RSTH_T  ,RSTH_H  ,RSTH_D  ,                                       RSTH_M,RSTH_N  ,RSTH_A  ,RSTH_I  ,RSTH_O , KC_QUOT,
+     XXXXXXX ,KC_J   ,KC_V    ,KC_G    ,KC_P    ,KC_B    ,XXXXXXX,XXXXXXX,    XXXXXXX, XXXXXXX,  KC_X  ,KC_W    ,KC_COMM ,KC_DOT  ,KC_SLSH, XXXXXXX, 
+                               XXXXXXX ,XXXXXXX ,R_BSPC  ,R_E    ,DEL    ,      ENTER, SPACE  ,XXXXXXX ,XXXXXXX ,XXXXXXX
     ),
 
 
@@ -98,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     [_FUN] = LAYOUT(
-	 QK_BOOT  , _______, _______, _______, _______, _______,                                     _______, KC_F7  , KC_F8   , KC_F9  , KC_F12 , _______,
+	 QK_BOOT,KC_COLEMAK,KC_RSTHD, _______, _______, _______,                                     _______, KC_F7  , KC_F8   , KC_F9  , KC_F12 , _______,
 	 _______  ,  O_GUI , O_LALT , O_SFT  ,  O_CTL , O_RALT ,                                     _______, KC_F4  , KC_F5   , KC_F6  , KC_F11 , _______,
 	 _______  , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_F1  , KC_F2   , KC_F3  , KC_F10 , _______, 
                                   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  
@@ -163,6 +188,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   update_swapper(&sft_grv_active, KC_LALT, KC_GRV, ALT_SFT_TAB, ALT_TAB,
                  &alt_tab_active, keycode, record);
   switch (keycode) {
+  case KC_COLEMAK:
+    if (record->event.pressed) {
+      set_single_persistent_default_layer(_CLM);
+    }
+    return false;
+  case KC_RSTHD:
+    if (record->event.pressed) {
+      set_single_persistent_default_layer(_RSTHD);
+    }
+    return false;
+
   case KC_NAV:
     if (record->event.pressed) {
       layer_on(_NAV);
@@ -297,19 +333,22 @@ bool oled_task_user(void) {
       oled_write_P(PSTR("Colemak-DH\n"), false);
       break;
     case 1:
-      oled_write_P(PSTR("Nav\n"), false);
+      oled_write_P(PSTR("RSTHD\n"), false);
       break;
     case 2:
+      oled_write_P(PSTR("Nav\n"), false);
+      break;
+    case 3:
       oled_write_P(PSTR("Sym\n"), false);
       break;
     case 4:
-      oled_write_P(PSTR("Num\n"), false);
-      break;
-    case 5:
       oled_write_P(PSTR("Fun\n"), false);
       break;
-    case 6:
+    case 5:
       oled_write_P(PSTR("Adj\n"), false);
+      break;
+    case 6:
+      oled_write_P(PSTR("Num\n"), false);
       break;
     default:
       oled_write_P(PSTR("Undefined\n"), false);
