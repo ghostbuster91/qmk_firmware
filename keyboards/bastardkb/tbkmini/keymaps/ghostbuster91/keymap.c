@@ -13,19 +13,17 @@
 #define HOME_M RALT_T(KC_M)
 #define HOME_O RGUI_T(KC_O)
 
-#define RSTH_R LGUI_T(KC_R)
-#define RSTH_S LALT_T(KC_S)
-#define RSTH_T LSFT_T(KC_T)
-#define RSTH_H LCTL_T(KC_H)
-#define RSTH_D RALT_T(KC_D)
+#define NRST_N LGUI_T(KC_R)
+#define NRST_R LALT_T(KC_S)
+#define NRST_S LSFT_T(KC_T)
+#define NRST_T LCTL_T(KC_H)
+#define NRST_D RALT_T(KC_D)
 
-#define RSTH_M RALT_T(KC_M)
-#define RSTH_N RCTL_T(KC_N)
-#define RSTH_A RSFT_T(KC_A)
-#define RSTH_I LALT_T(KC_I)
-#define RSTH_O RGUI_T(KC_O)
-
-#define R_BSPC LT(_NUM, KC_BSPC)
+#define NRST_L RALT_T(KC_M)
+#define NRST_H RCTL_T(KC_N)
+#define NRST_A RSFT_T(KC_A)
+#define NRST_E LALT_T(KC_I)
+#define NRST_I RGUI_T(KC_O)
 
 // Home row mods for number layer.
 #define NUM_1 LGUI_T(KC_1)
@@ -58,7 +56,7 @@
 enum tbkmini_layers {
   /* _M_XYZ = Mac Os, _W_XYZ = Win/Linux */
   _CLM,
-  _RSTHD,
+  _NRST,
   _NAV,
   _SYM,
   _NUM,
@@ -71,7 +69,7 @@ enum tbkmini_layers {
 enum custom_keycodes {
   KC_QWERTY = SAFE_RANGE,
   KC_COLEMAK,
-  KC_RSTHD,
+  KC_NRST,
   KC_NAV,
   KC_SYM,
   KC_NMBR,
@@ -97,19 +95,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 	XXXXXXX    ,KC_Z     ,KC_X     ,KC_C    ,KC_D    ,KC_V     			,KC_K   ,KC_H   ,KC_COMM ,KC_DOT  ,KC_SLSH ,XXXXXXX  , 
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-						 KC_NMBR, BSPC     ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
+						                        KC_NMBR, BSPC     ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
         //`--------------------------'  `--------------------------'
 
         ),
-   [_RSTHD] = LAYOUT_split_3x6_3(
+   [_NRST] = LAYOUT_split_3x6_3(
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-        KC_TAB     ,XXXXXXX  ,KC_C     ,KC_Y    ,KC_F    ,KC_K			            	,KC_Z   ,KC_L   ,KC_Q    ,KC_U    ,XXXXXXX ,XXXXXXX,
+        KC_TAB     ,KC_Q     ,KC_W     ,KC_Y    ,KC_P    ,KC_B			            	,KC_J   ,KC_K   ,KC_O    ,KC_U    ,XXXXXXX ,XXXXXXX,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-        KC_ESC     ,RSTH_R   ,RSTH_S   ,RSTH_T  ,RSTH_H  ,RSTH_D                        ,RSTH_M ,RSTH_N ,RSTH_A  ,RSTH_I  ,RSTH_O  ,KC_QUOT,
+        KC_ESC     ,NRST_N   ,NRST_R   ,NRST_S  ,NRST_T  ,NRST_D                        ,NRST_L ,NRST_H ,NRST_A  ,NRST_E  ,NRST_I  ,KC_QUOT,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-	    XXXXXXX    ,KC_J     ,KC_V     ,KC_G    ,KC_P    ,KC_B     			            ,KC_X   ,KC_W   ,KC_COMM ,KC_DOT  ,KC_SLSH ,XXXXXXX  , 
+	    XXXXXXX    ,KC_Z     ,KC_X     ,KC_C    ,KC_F    ,KC_G     			            ,KC_V   ,KC_M   ,KC_COMM ,KC_DOT  ,KC_SLSH ,XXXXXXX  , 
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-						                        R_BSPC,  LT(_NAV,KC_E)   ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
+						                        KC_NMBR,  BSPC   ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
         //                                    `--------------------------'  `--------------------------'
 
         ),
@@ -179,7 +177,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_FUN] = LAYOUT_split_3x6_3(
 
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-	QK_BOOT     ,KC_COLEMAK  ,KC_RSTHD   ,_______   ,_______   ,_______                ,_______ ,KC_F7  ,KC_F8   ,KC_F9   ,KC_F12, _______,
+	QK_BOOT     ,KC_COLEMAK  ,KC_NRST   ,_______   ,_______   ,_______                ,_______ ,KC_F7  ,KC_F8   ,KC_F9   ,KC_F12, _______,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 	_______      ,O_GUI    ,O_LALT   ,O_SFT    ,O_CTL    ,O_RALT	       	       ,_______ ,KC_F4  ,KC_F5   ,KC_F6   ,KC_F11, _______,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -256,9 +254,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       set_single_persistent_default_layer(_CLM);
     }
     return false;
-  case KC_RSTHD:
+  case KC_NRST:
     if (record->event.pressed) {
-      set_single_persistent_default_layer(_RSTHD);
+      set_single_persistent_default_layer(_NRST);
     }
     return false;
   case KC_GAME:
