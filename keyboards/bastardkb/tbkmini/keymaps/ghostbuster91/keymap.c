@@ -62,8 +62,6 @@ enum tbkmini_layers {
   _NUM,
   _ADJ,
   _FUN,
-  _GAME,
-  _GAME2
 };
 
 enum custom_keycodes {
@@ -79,9 +77,6 @@ enum custom_keycodes {
   ALT_SFT_TAB,
   KC_SFT_TAB,
   VIM_W,
-  LLOCK,
-  KC_GAME,
-  KC_GAME2
 };
 
 // clang-format off
@@ -111,32 +106,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //                                    `--------------------------'  `--------------------------'
 
         ),
-    [_GAME] = LAYOUT_split_3x6_3(
-
-        //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-	XXXXXXX     ,KC_ESC  ,KC_Q    ,KC_W    ,KC_E     ,KC_R         	     	     ,XXXXXXX ,XXXXXXX  ,XXXXXXX ,XXXXXXX, XXXXXXX, KC_COLEMAK  ,
-        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-	XXXXXXX     ,KC_TAB  ,KC_A    ,KC_S    ,KC_D     ,KC_F                       ,XXXXXXX   ,XXXXXXX    ,XXXXXXX  ,XXXXXXX   ,XXXXXXX, XXXXXXX,
-        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-	XXXXXXX     ,XXXXXXX ,KC_Z    ,KC_X    ,KC_C     ,KC_V               ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX, XXXXXXX, 
-        //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-        					KC_SPC, KC_GAME2, KC_ENT           ,XXXXXXX  ,XXXXXXX, XXXXXXX
-	//`--------------------------'  `--------------------------'
-        ),
-
-    [_GAME2] = LAYOUT_split_3x6_3(
-
-        //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-	XXXXXXX     ,KC_0  ,KC_1    ,KC_2    ,KC_3   ,KC_4           	     ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX, XXXXXXX  ,
-        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-	XXXXXXX     ,XXXXXXX ,O_LALT  ,O_SFT   ,O_CTL   ,XXXXXXX                     ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX, XXXXXXX,
-        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-	XXXXXXX     ,XXXXXXX ,KC_J ,KC_M ,KC_N ,XXXXXXX                	             ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX ,XXXXXXX, XXXXXXX, 
-        //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-					  _______, _______, _______           ,XXXXXXX  ,XXXXXXX, XXXXXXX
-	//`--------------------------'  `--------------------------'
-        ),
-
 
     [_NAV] = LAYOUT_split_3x6_3(
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -259,11 +228,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       set_single_persistent_default_layer(_NRST);
     }
     return false;
-  case KC_GAME:
-    if (record->event.pressed) {
-      set_single_persistent_default_layer(_GAME);
-    }
-    return false;
   case KC_NAV:
     if (record->event.pressed) {
       layer_on(_NAV);
@@ -283,13 +247,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       layer_on(_NUM);
     } else {
       layer_off(_NUM);
-    }
-    return false;
-  case KC_GAME2:
-    if (record->event.pressed) {
-      layer_on(_GAME2);
-    } else {
-      layer_off(_GAME2);
     }
     return false;
   case KC_FUN:
