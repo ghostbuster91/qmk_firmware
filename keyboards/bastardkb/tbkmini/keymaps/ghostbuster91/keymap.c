@@ -95,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 	XXXXXXX    ,KC_Z     ,KC_X     ,KC_C    ,KC_D    ,KC_V     			,KC_K   ,KC_H   ,KC_COMM ,KC_DOT  ,KC_SLSH ,XXXXXXX  , 
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-						                        KC_NMBR, BSPC     ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
+						                        KC_NMBR, BSPC     ,DEL       ,ENTER    ,SPACE    ,KC_TMUX
         //`--------------------------'  `--------------------------'
 
         ),
@@ -107,7 +107,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
 	    XXXXXXX    ,KC_Z     ,KC_X     ,KC_C    ,KC_F    ,KC_G     			            ,KC_V   ,KC_M   ,KC_COMM ,KC_DOT  ,KC_SLSH ,XXXXXXX  , 
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-						                        KC_NMBR,  BSPC   ,DEL       ,ENTER    ,SPACE    ,XXXXXXX
+						                        KC_NMBR,  BSPC   ,DEL       ,ENTER    ,SPACE    ,KC_TMUX
         //                                    `--------------------------'  `--------------------------'
 
         ),
@@ -347,6 +347,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(KC_W);
       unregister_code(KC_ENT);
     }
+    return false;
+  case KC_TMUX:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_B);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_B);
+    }
+    return false;
   }
   return true;
 }
