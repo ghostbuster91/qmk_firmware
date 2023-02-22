@@ -13,17 +13,17 @@
 #define HOME_M RALT_T(KC_M)
 #define HOME_O RGUI_T(KC_O)
 
-#define NRST_N LGUI_T(KC_R)
-#define NRST_R LALT_T(KC_S)
-#define NRST_S LSFT_T(KC_T)
-#define NRST_T LCTL_T(KC_H)
+#define NRST_N LGUI_T(KC_N)
+#define NRST_R LALT_T(KC_R)
+#define NRST_S LSFT_T(KC_S)
+#define NRST_T LCTL_T(KC_T)
 #define NRST_D RALT_T(KC_D)
 
-#define NRST_L RALT_T(KC_M)
-#define NRST_H RCTL_T(KC_N)
+#define NRST_L RALT_T(KC_L)
+#define NRST_H RCTL_T(KC_H)
 #define NRST_A RSFT_T(KC_A)
-#define NRST_E LALT_T(KC_I)
-#define NRST_I RGUI_T(KC_O)
+#define NRST_E LALT_T(KC_E)
+#define NRST_I RGUI_T(KC_I)
 
 // Home row mods for number layer.
 #define NUM_1 LGUI_T(KC_1)
@@ -349,4 +349,22 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record,
 
   // Otherwise, follow the opposite hands rule.
   return achordion_opposite_hands(tap_hold_record, other_record);
+}
+
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+            return true;
+
+        default:
+            return false;  // Deactivate Caps Word.
+    }
 }
