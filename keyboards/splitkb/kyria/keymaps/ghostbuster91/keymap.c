@@ -38,7 +38,7 @@ enum layers {
 #define BSPC LT(_NAV, KC_BSPC)
 #define DEL LT(_FUN, KC_DEL)
 #define ENTER RSFT_T(KC_ENT)
-#define TAB LT(_NAV, KC_TAB)
+#define TAB LT(_NUM, KC_TAB)
 
 #define NRST_N LGUI_T(KC_N)
 #define NRST_R LALT_T(KC_R)
@@ -74,7 +74,8 @@ enum custom_keycodes {
   KC_SFT_TAB,
   VIM_W,
   KC_COLEMAK,
-  KC_NRST
+  KC_NRST,
+  KC_TMUX
 };
 
 // clang-format off
@@ -84,22 +85,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,                                        KC_J , KC_L   ,  KC_U  ,   KC_Y ,KC_SCLN, XXXXXXX,
      KC_ESC  ,HOME_A,  HOME_R , HOME_S ,  HOME_T,  HOME_G,                                       HOME_M, HOME_N ,HOME_E  ,HOME_I  ,HOME_O , KC_QUOT,
      XXXXXXX , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , XXXXXXX,XXXXXXX,   XXXXXXX, XXXXXXX,   KC_K ,   KC_H ,KC_COMM , KC_DOT ,KC_SLSH, XXXXXXX,
-                                XXXXXXX, XXXXXXX,     TAB, BSPC   ,DEL    ,     ENTER,  SPACE , XXXXXXX, XXXXXXX,XXXXXXX
+                                XXXXXXX, XXXXXXX,     TAB, BSPC   ,DEL    ,     ENTER,  SPACE , KC_TMUX, XXXXXXX,XXXXXXX
     ),
 
 
     [_NRST] = LAYOUT(
-     KC_TAB  ,XXXXXXX,KC_C    ,KC_Y    ,KC_F    ,KC_K	 ,                                       KC_Z  , KC_L   ,KC_Q    ,KC_U    ,XXXXXXX, XXXXXXX,
+     KC_TAB  ,KC_Q   ,KC_W    ,KC_Y    ,KC_P    ,KC_B	 ,                                       KC_J  ,KC_K    ,KC_O    ,KC_U    ,XXXXXXX ,XXXXXXX,
      KC_ESC  ,NRST_N ,NRST_R  ,NRST_S  ,NRST_T  ,NRST_D  ,                                       NRST_L,NRST_H  ,NRST_A  ,NRST_E  ,NRST_I  ,KC_QUOT,
-     XXXXXXX ,KC_J   ,KC_V    ,KC_G    ,KC_P    ,KC_B    ,XXXXXXX,XXXXXXX,    XXXXXXX, XXXXXXX,  KC_X  ,KC_W    ,KC_COMM ,KC_DOT  ,KC_SLSH, XXXXXXX, 
-                               XXXXXXX ,XXXXXXX ,   TAB  ,BSPC   ,DEL    ,      ENTER, SPACE  ,XXXXXXX ,XXXXXXX ,XXXXXXX
+     XXXXXXX ,KC_Z   ,KC_X    ,KC_C    ,KC_F    ,KC_G    ,XXXXXXX,XXXXXXX,    XXXXXXX, XXXXXXX,  KC_V  ,KC_M    ,KC_COMM ,KC_DOT  ,KC_SLSH ,XXXXXXX, 
+                               XXXXXXX ,XXXXXXX ,   TAB  ,BSPC   ,DEL    ,      ENTER, SPACE  , KC_TMUX,XXXXXXX ,XXXXXXX
     ),
 
 
     [_NAV] = LAYOUT(
      _______ , _______, _______, _______, _______, _______,                                     _______, _______, KC_HOME, KC_END , _______, _______, 
      ALT_TAB ,  O_GUI , O_LALT ,  O_SFT ,  O_CTL ,  O_RALT,                                     KC_LEFT, KC_DOWN, KC_UP  ,KC_RIGHT, _______, VIM_W,
-  ALT_SFT_TAB,KC_UNDO , KC_CUT , KC_COPY,KC_PASTE, _______, _______, _______, _______, _______, KC_PSCR, KC_PGDN,KC_PGUP ,_______ , _______, _______,
+  ALT_SFT_TAB,KC_UNDO , KC_CUT , KC_COPY,KC_PASTE, KC_PSCR, _______, _______, _______, _______, _______, KC_PGDN,KC_PGUP ,_______ , _______, _______,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -273,6 +274,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(KC_W);
       unregister_code(KC_ENT);
     }
+    return false;
+  case KC_TMUX:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_B);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_B);
+    }
+    return false;
   }
   return true;
 }
