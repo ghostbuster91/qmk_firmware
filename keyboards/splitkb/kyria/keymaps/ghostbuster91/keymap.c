@@ -98,9 +98,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
     [_NAV] = LAYOUT(
-     _______ , _______, _______, _______, _______, _______,                                     _______, _______, KC_HOME, KC_END , _______, _______, 
-     ALT_TAB ,  O_GUI , O_LALT ,  O_SFT ,  O_CTL ,  O_RALT,                                     KC_LEFT, KC_DOWN, KC_UP  ,KC_RIGHT, _______, VIM_W,
-  ALT_SFT_TAB,KC_UNDO , KC_CUT , KC_COPY,KC_PASTE, KC_PSCR, _______, _______, _______, _______, _______, KC_PGDN,KC_PGUP ,_______ , _______, _______,
+     _______ , _______, _______, _______, _______, _______,                                     _______, _______, KC_HOME, KC_END , _______, KC_F12, 
+     ALT_TAB ,  O_GUI , O_LALT ,  O_SFT ,  O_CTL ,  O_RALT,                                     KC_LEFT, KC_DOWN, KC_UP  ,KC_RIGHT, _______, KC_F11,
+  ALT_SFT_TAB,KC_UNDO , KC_CUT , KC_COPY,KC_PASTE, KC_PSCR, _______, _______, _______, _______, _______, KC_PGDN,KC_PGUP ,_______ , _______, KC_F10,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
