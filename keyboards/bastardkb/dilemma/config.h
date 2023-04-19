@@ -18,7 +18,6 @@
 
 #pragma once
 
-
 #define DIODE_DIRECTION ROW2COL
 
 /* Pointing device configuration. */
@@ -42,3 +41,4 @@
 #define CIRQUE_PINNACLE_DIAMETER_MM 35
 #define CIRQUE_PINNACLE_CURVED_OVERLAY
 #define POINTING_DEVICE_GESTURES_SCROLL_ENABLE // Circular scroll.
+#define CIRQUE_PINNACLE_TAP_ENABLE

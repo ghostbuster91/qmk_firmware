@@ -19,6 +19,10 @@
 #pragma once
 
 /* Key matrix configuration. */
+#define MATRIX_ROWS 8 // Rows are doubled-up.
+#define MATRIX_COLS 5
+
+/* Key matrix configuration. */
 #define MATRIX_ROW_PINS \
     { GP4, GP5, GP27, GP26 }
 #define MATRIX_COL_PINS \

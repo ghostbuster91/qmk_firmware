@@ -18,20 +18,20 @@
 #pragma once
 
 // clang-format off
-#define LAYOUT_split_3x5_2(                             \
-  k00, k01, k02, k03, k04,     k44, k43, k42, k41, k40, \
-  k10, k11, k12, k13, k14,     k54, k53, k52, k51, k50, \
-  k20, k21, k22, k23, k24,     k64, k63, k62, k61, k60, \
-                 k30, k32,     k72, k70                 \
+#define LAYOUT_split_3x6_3(                             \
+  k00, k01, k02, k03, k04, k05,     k45, k44, k43, k42, k41, k40, \
+  k10, k11, k12, k13, k14, k15,     k55, k54, k53, k52, k51, k50, \
+  k20, k21, k22, k23, k24, k25,     k65, k64, k63, k62, k61, k60, \
+                 k31, k33, k35,     k75, k73, k71                 \
 )                                                       \
 {                                                       \
-  {   k00,   k01,   k02,   k03,   k04 },                \
-  {   k10,   k11,   k12,   k13,   k14 },                \
-  {   k20,   k21,   k22,   k23,   k24 },                \
-  {   k30, KC_NO,   k32, KC_NO, KC_NO },                \
-  {   k40,   k41,   k42,   k43,   k44 },                \
-  {   k50,   k51,   k52,   k53,   k54 },                \
-  {   k60,   k61,   k62,   k63,   k64 },                \
-  {   k70, KC_NO,   k72, KC_NO, KC_NO },                \
+  {   k00,   k01,   k02,   k03,   k04,   k05 },                \
+  {   k10,   k11,   k12,   k13,   k14,   k15 },                \
+  {   k20,   k21,   k22,   k23,   k24,   k25 },                \
+  { KC_NO,   k31, KC_NO,   k33, KC_NO,   k35 },                \
+  {   k40,   k41,   k42,   k43,   k44,   k45 },                \
+  {   k50,   k51,   k52,   k53,   k54,   k55 },                \
+  {   k60,   k61,   k62,   k63,   k64,   k65 },                \
+  { KC_NO,   k71, KC_NO,   k73, KC_NO,   k75 },                \
 }
 // clang-format on
