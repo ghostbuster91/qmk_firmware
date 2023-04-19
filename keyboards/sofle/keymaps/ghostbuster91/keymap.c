@@ -8,7 +8,7 @@ const uint16_t PROGMEM combo_fp_tab[] = {KC_F, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_lu_esc[] = {KC_L, KC_U, COMBO_END};
 combo_t key_combos[COMBO_COUNT] = {
     COMBO(combo_fp_tab, KC_TAB),
-    COMBO(combo_lu_esc, KC_ESC), 
+    COMBO(combo_lu_esc, KC_ESC),
 };
 
 
@@ -32,8 +32,8 @@ bool sft_grv_active = false;
 #define HOME_I  LALT_T(KC_I)
 #define HOME_A  LGUI_T(KC_A)
 #define HOME_G  RALT_T(KC_G)
-#define HOME_M  RALT_T(KC_M)	
-#define HOME_O  RGUI_T(KC_O)	
+#define HOME_M  RALT_T(KC_M)
+#define HOME_O  RGUI_T(KC_O)
 
 // Home row mods for number layer.
 #define NUM_1 LGUI_T(KC_1)
@@ -164,7 +164,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ESC,    KC_QUOT,   KC_LABK,   KC_RABK,   KC_DQUO,   KC_GRV,                       KC_AMPR,   KC_UNDERSCORE,KC_LBRC,KC_RBRC,   KC_PERC,   XXXXXXX,
   KC_TAB,    KC_EXLM,   KC_MINS,   KC_PLUS,   KC_EQL,    KC_HASH,                      KC_PIPE,   KC_COLON,  KC_LPRN,   KC_RPRN,   KC_SCLN,   XXXXXXX,
   SFT_TAB,   KC_CIRC,   KC_SLSH,   KC_ASTR,   KC_BSLS,   KC_AT,   KC_MUTE,    XXXXXXX, KC_TILD,   KC_DLR,    KC_LCBR,   KC_RCBR,   KC_QUES,   LLOCK,
-            		      XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,    _______, _______, XXXXXXX, XXXXXXX, XXXXXXX 
+            		      XXXXXXX, XXXXXXX, XXXXXXX, _______, _______,    _______, _______, XXXXXXX, XXXXXXX, XXXXXXX
 ),
 /* NAVIGATION
  * ,-----------------------------------------.                    ,-----------------------------------------.
@@ -181,10 +181,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            `-----------------------------------'           '------''---------------------------'
  */
 [_NAV] = LAYOUT(
-  QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,    _______,  KC_COLEMAK, KC_QWERTY, _______,   
-  _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       CAPS_WORD,  KC_TAB, 	KC_HOME,  KC_END,    _______,   _______,   
-  ALT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT,  _______,   VIM_W,   
-  ALT_SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDOWN,  KC_PGUP,  _______,   _______,   XXXXXXX,   
+  QK_BOOT,   _______,   _______,   _______,   _______,   _______,                       _______,    _______,    _______,  KC_COLEMAK, KC_QWERTY, _______,
+  _______,   _______,   KC_INS,    KC_PSCR,   LCTL(KC_A),KC_TMUX,                       CW_TOGG,  KC_TAB, 	KC_HOME,  KC_END,    _______,   _______,
+  ALT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                        KC_LEFT,    KC_DOWN,    KC_UP,    KC_RIGHT,  _______,   VIM_W,
+  ALT_SFT_TAB,   KC_UNDO,   KC_CUT,    KC_COPY,   KC_PASTE,  _______, _______,     _______, _______,    KC_PGDN,  KC_PGUP,  _______,   _______,   XXXXXXX,
                              _______, _______, _______, _______, _______,       _______, _______, _______, _______, _______
 ),
 /* NUMBERS
@@ -201,7 +201,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
  *            `-----------------------------------'           '------''---------------------------'
  */
-[_NUM] = LAYOUT(    
+[_NUM] = LAYOUT(
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
   XXXXXXX,   XXXXXXX,   KC_DOT,    KC_COMM,   KC_PERC,   KC_PLUS,                     KC_MINS,   KC_7,      KC_8,      KC_9,      XXXXXXX,   XXXXXXX,
   CT_TAB,   O_GUI,     O_LALT,    O_SFT,     O_CTL,     O_RALT,                      XXXXXXX,   KC_4,      KC_5,      KC_6,      KC_0,      XXXXXXX,
@@ -222,7 +222,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *            |      |      |      |      |/       /         \      \ |  ENT |      |      |      |
  *            `-----------------------------------'           '------''---------------------------'
  */
-[_ADJ] = LAYOUT(    
+[_ADJ] = LAYOUT(
   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,                     XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,   XXXXXXX,
 	_______    ,LCTL(KC_1),LCTL(KC_2), LCTL(KC_3),LCTL(KC_4),LCTL(KC_5),     LCTL(KC_6),LCTL(KC_7),LCTL(KC_8),LCTL(KC_9),LCTL(KC_0), _______,
 	_______    ,LALT(KC_1),LALT(KC_2),LALT(KC_3),LALT(KC_4),LALT(KC_5),      LALT(KC_6),LALT(KC_7),LALT(KC_8),LALT(KC_9),LALT(KC_0), _______,
@@ -460,7 +460,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         if (clockwise) {
             tap_code(KC_PGUP);
         } else {
-            tap_code(KC_PGDOWN);
+            tap_code(KC_PGDN);
         }
     }
     return true;
