@@ -8,7 +8,7 @@ PICO_INTRINSICS_ENABLED = no # ATM Unsupported by ChibiOS.
 BOOTMAGIC_ENABLE = yes      # Enable Bootmagic Lite
 MOUSEKEY_ENABLE = no        # Mouse keys
 EXTRAKEY_ENABLE = yes       # Audio control and System control
-CONSOLE_ENABLE = no         # Console for debug
+CONSOLE_ENABLE = yes         # Console for debug
 COMMAND_ENABLE = no         # Commands for debug and configuration
 NKRO_ENABLE = no            # Enable N-Key Rollover
 BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
@@ -25,3 +25,7 @@ SPLIT_KEYBOARD = yes
 
 SERIAL_DRIVER = vendor
 WS2812_DRIVER = vendor
+
+CAPS_WORD_ENABLE = yes
+TAP_DANCE_ENABLE = yes
+SRC += features/achordion.c
