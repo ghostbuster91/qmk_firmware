@@ -9,8 +9,8 @@
 #define HOME_I  LALT_T(KC_I)
 #define HOME_A  LGUI_T(KC_A)
 #define HOME_G  RALT_T(KC_G)
-#define HOME_M  RALT_T(KC_M)	
-#define HOME_O  RGUI_T(KC_O)	
+#define HOME_M  RALT_T(KC_M)
+#define HOME_O  RGUI_T(KC_O)
 
 // Home row mods for number layer.
 #define NUM_1 LGUI_T(KC_1)
@@ -26,8 +26,8 @@
 
 #define SPACE LT(_SYM, KC_SPC)
 #define BSPC LT(_NAV, KC_BSPC)
-#define DEL LSFT_T(KC_DEL) 
-#define ENTER RSFT_T(KC_ENT) 
+#define DEL LSFT_T(KC_DEL)
+#define ENTER RSFT_T(KC_ENT)
 
 #define      O_GUI    OSM(MOD_LGUI)
 #define      O_SFT    OSM(MOD_LSFT)
@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                     KC_HOME,
                            KC_BSPC, KC_DEL ,KC_END ,
 
-           KC_F9 ,KC_F10 ,KC_F11 ,KC_F12 ,KC_PSCR ,KC_SLCK  ,KC_PAUS, KC_NO, QK_BOOT,
+           KC_F9 ,KC_F10 ,KC_F11 ,KC_F12 ,KC_PSCR ,KC_SLCT  ,KC_PAUS, KC_NO, QK_BOOT,
 	   KC_6  ,KC_7   ,KC_8   ,KC_9   ,KC_0   ,KC_MINS,
 	   KC_Y  ,KC_U   ,KC_I   ,KC_O   ,KC_P   ,KC_BSLS,
 	   KC_H  ,KC_J   ,KC_K   ,KC_L   ,KC_SCLN,KC_QUOT,
@@ -124,7 +124,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 				 XXXXXXX,
 			BSPC,    DEL    ,XXXXXXX,
 
-	XXXXXXX   ,XXXXXXX  ,XXXXXXX  ,XXXXXXX  ,XXXXXXX  ,XXXXXXX  ,XXXXXXX,  XXXXXXX,  QK_BOOT,	
+	XXXXXXX   ,XXXXXXX  ,XXXXXXX  ,XXXXXXX  ,XXXXXXX  ,XXXXXXX  ,XXXXXXX,  XXXXXXX,  QK_BOOT,
 	KC_6      ,KC_7     ,KC_8     ,KC_9     ,KC_0     ,XXXXXXX  ,
 	KC_J      ,KC_L     ,KC_U     ,KC_Y     ,KC_SCLN  ,XXXXXXX  ,
 	HOME_M    ,HOME_N   ,HOME_E   ,HOME_I   ,HOME_O   ,KC_QUOT  ,
@@ -147,11 +147,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 				 _______,
 			_______, _______ ,_______,
 
-	_______   ,_______  ,_______  ,_______  ,_______  ,_______  ,_______,  _______, _______,	
+	_______   ,_______  ,_______  ,_______  ,_______  ,_______  ,_______,  _______, _______,
 	_______   ,_______  ,_______  ,_______  ,_______  ,_______  ,
 	_______   ,_______  ,KC_HOME  ,KC_END   ,_______  ,_______  ,
 	KC_LEFT   ,KC_DOWN  ,KC_UP    ,KC_RIGHT ,_______  ,VIM_WQ   ,
-	_______   ,KC_PGDOWN,KC_PGUP  ,_______  ,_______  ,_______  ,
+	_______   ,KC_PGDN,KC_PGUP  ,_______  ,_______  ,_______  ,
 		   _______  ,_______  ,_______  ,_______  ,
 
 			_______, _______,
@@ -194,7 +194,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 				_______,
 			_______,_______ ,_______,
 
-	_______  ,_______ ,_______ ,_______ ,_______ ,_______  ,_______, _______, _______,	
+	_______  ,_______ ,_______ ,_______ ,_______ ,_______  ,_______, _______, _______,
 	_______   ,_______   ,_______   ,_______   ,_______   ,_______,
 	_______   ,_______   ,_______   ,_______   ,_______,_______,
 	NUM_6,     NUM_7,     NUM_8,     NUM_9,     NUM_0, _______,
