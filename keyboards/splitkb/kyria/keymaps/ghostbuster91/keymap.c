@@ -74,7 +74,6 @@ enum custom_keycodes {
   ALT_TAB,
   ALT_SFT_TAB,
   KC_SFT_TAB,
-  VIM_W,
   KC_COLEMAK,
   KC_RSTHD
 };
@@ -93,15 +92,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_RSTHD] = LAYOUT(
      KC_TAB  ,XXXXXXX,KC_C    ,KC_Y    ,KC_F    ,KC_K	 ,                                       KC_Z  , KC_L   ,KC_Q    ,KC_U    ,XXXXXXX, XXXXXXX,
      KC_ESC  ,RSTH_R ,RSTH_S  ,RSTH_T  ,RSTH_H  ,RSTH_D  ,                                       RSTH_M,RSTH_N  ,RSTH_A  ,RSTH_I  ,RSTH_O , KC_QUOT,
-     XXXXXXX ,KC_J   ,KC_V    ,KC_G    ,KC_P    ,KC_B    ,XXXXXXX,XXXXXXX,    XXXXXXX, XXXXXXX,  KC_X  ,KC_W    ,KC_COMM ,KC_DOT  ,KC_SLSH, XXXXXXX, 
+     XXXXXXX ,KC_J   ,KC_V    ,KC_G    ,KC_P    ,KC_B    ,XXXXXXX,XXXXXXX,    XXXXXXX, XXXXXXX,  KC_X  ,KC_W    ,KC_COMM ,KC_DOT  ,KC_SLSH, XXXXXXX,
                                XXXXXXX ,XXXXXXX ,R_BSPC  ,R_E    ,DEL    ,      ENTER, SPACE  ,XXXXXXX ,XXXXXXX ,XXXXXXX
     ),
 
 
     [_NAV] = LAYOUT(
-     _______ , _______, _______, _______, _______, _______,                                     _______, _______, KC_HOME, KC_END , _______, _______, 
-     ALT_TAB ,  O_GUI , O_LALT ,  O_SFT ,  O_CTL ,  O_RALT,                                     KC_LEFT, KC_DOWN, KC_UP  ,KC_RIGHT, _______, VIM_W,
-  ALT_SFT_TAB,KC_UNDO , KC_CUT , KC_COPY,KC_PASTE, _______, _______, _______, _______, _______, KC_PSCR, KC_PGDN,KC_PGUP ,_______ , _______, _______,
+     _______ , _______, _______, _______, _______, _______,                                     _______, _______, KC_HOME, KC_END , _______, KC_F12,
+     ALT_TAB ,  O_GUI , O_LALT ,  O_SFT ,  O_CTL ,  O_RALT,                                     KC_LEFT, KC_DOWN, KC_UP  ,KC_RIGHT, _______, KC_F11,
+  ALT_SFT_TAB,KC_UNDO , KC_CUT , KC_COPY,KC_PASTE, _______, _______, _______, _______, _______, KC_PSCR, KC_PGDN,KC_PGUP ,_______ , _______, KC_F10,
                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
@@ -117,24 +116,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NUM] = LAYOUT(
 	 _______ , _______, _______, _______, _______, _______,                                     _______, KC_7   , KC_8    , KC_9   , _______, _______,
 	 CT_TAB  , O_GUI  , O_LALT ,  O_SFT ,  O_CTL ,  O_RALT,                                     _______, KC_4   , KC_5    , KC_6   , KC_0   , _______,
-   CT_SFT_TAB, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_1   , KC_2    , KC_3   , _______, _______, 
-					             _______, _______, _______, _______, _______, KC_BSPC, _______, _______, _______, _______  
+   CT_SFT_TAB, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_1   , KC_2    , KC_3   , _______, _______,
+					             _______, _______, _______, _______, _______, KC_BSPC, _______, _______, _______, _______
     ),
 
 
     [_FUN] = LAYOUT(
 	 QK_BOOT,KC_COLEMAK,KC_RSTHD, _______, _______, _______,                                     _______, KC_F7  , KC_F8   , KC_F9  , KC_F12 , _______,
-	 _______  ,  O_GUI , O_LALT , O_SFT  ,  O_CTL , O_RALT ,                                     _______, KC_F4  , KC_F5   , KC_F6  , KC_F11 , _______,
-	 _______  , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_F1  , KC_F2   , KC_F3  , KC_F10 , _______, 
-                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  
+	 _______  ,KC_LGUI , O_LALT , O_SFT  ,  O_CTL , O_RALT ,                                     _______, KC_F4  , KC_F5   , KC_F6  , KC_F11 , _______,
+	 _______  , _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_F1  , KC_F2   , KC_F3  , KC_F10 , _______,
+                                  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
     ),
 
 
     [_ADJ] = LAYOUT(
 	 _______  ,LCTL(KC_1),LCTL(KC_2), LCTL(KC_3),LCTL(KC_4),LCTL(KC_5),                         LCTL(KC_6),LCTL(KC_7),LCTL(KC_8),LCTL(KC_9),LCTL(KC_0), _______,
 	 _______  ,LALT(KC_1),LALT(KC_2),LALT(KC_3),LALT(KC_4),LALT(KC_5),                          LALT(KC_6),LALT(KC_7),LALT(KC_8),LALT(KC_9),LALT(KC_0), _______,
-	 _______  ,_______   ,_______   ,_______, _______, _______, _______, _______, _______, _______, _______, _______, _______ ,_______ ,_______, _______, 
-        					         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  
+	 _______  ,_______   ,_______   ,_______, _______, _______, _______, _______, _______, _______, _______, _______, _______ ,_______ ,_______, _______,
+        					         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
         )
 
 };
@@ -264,17 +263,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(KC_Z);
     }
     return false;
-  case VIM_W:
-    if (record->event.pressed) {
-      register_mods(mod_config(MOD_LSFT));
-      register_code(KC_SCLN);
-      unregister_mods(mod_config(MOD_LSFT));
-      register_code(KC_W);
-      register_code(KC_ENT);
-      unregister_code(KC_SCLN);
-      unregister_code(KC_W);
-      unregister_code(KC_ENT);
-    }
   }
   return true;
 }
@@ -309,6 +297,23 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record,
 
   // Otherwise, follow the opposite hands rule.
   return achordion_opposite_hands(tap_hold_record, other_record);
+}
+
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        // Keycodes that continue Caps Word, with shift applied.
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT));  // Apply shift to next key.
+            return true;
+        // Keycodes that continue Caps Word, without shifting.
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+            return true;
+        default:
+            return false;  // Deactivate Caps Word.
+    }
 }
 
 #ifdef OLED_ENABLE
