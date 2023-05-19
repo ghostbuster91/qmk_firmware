@@ -66,7 +66,7 @@ enum layers {
 #define SFT_TAB LSFT(KC_TAB)
 
 enum custom_keycodes {
-  KC_QWERTY = SAFE_RANGE,
+  KC_QWERTY = QK_USER,
   KC_NAV,
   KC_SYM,
   KC_NMBR,

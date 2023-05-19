@@ -66,7 +66,7 @@ enum tbkmini_layers {
 };
 
 enum custom_keycodes {
-  KC_QWERTY = SAFE_RANGE,
+  KC_QWERTY = QK_USER,
   KC_COLEMAK,
   KC_NRST,
   KC_NAV,
