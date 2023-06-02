@@ -75,7 +75,8 @@ enum custom_keycodes {
   ALT_SFT_TAB,
   KC_SFT_TAB,
   KC_COLEMAK,
-  KC_RSTHD
+  KC_RSTHD,
+  KC_TMUX
 };
 
 // clang-format off
@@ -85,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,                                        KC_J , KC_L   ,  KC_U  ,   KC_Y ,KC_SCLN, XXXXXXX,
      KC_ESC  ,HOME_A,  HOME_R , HOME_S ,  HOME_T,  HOME_G,                                       HOME_M, HOME_N ,HOME_E  ,HOME_I  ,HOME_O , KC_QUOT,
      XXXXXXX , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , XXXXXXX,XXXXXXX,   XXXXXXX, XXXXXXX,   KC_K ,   KC_H ,KC_COMM , KC_DOT ,KC_SLSH, XXXXXXX,
-                                XXXXXXX, XXXXXXX, KC_NMBR, BSPC   ,DEL    ,     ENTER,  SPACE , XXXXXXX, XXXXXXX,XXXXXXX
+                                XXXXXXX, XXXXXXX, KC_NMBR, BSPC   ,DEL    ,     ENTER,  SPACE , KC_TMUX, XXXXXXX,XXXXXXX
     ),
 
 
@@ -261,6 +262,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     } else {
       unregister_mods(mod_config(MOD_LCTL));
       unregister_code(KC_Z);
+    }
+    return false;
+  case KC_TMUX:
+    if (record->event.pressed) {
+      register_mods(mod_config(MOD_LCTL));
+      register_code(KC_B);
+    } else {
+      unregister_mods(mod_config(MOD_LCTL));
+      unregister_code(KC_B);
     }
     return false;
   }
