@@ -39,6 +39,7 @@ enum layers {
 #define DEL LT(_FUN, KC_DEL)
 #define ENTER RSFT_T(KC_ENT)
 #define R_E LT(_NAV, KC_E)
+#define TAB LT(_NUM, KC_TAB)
 
 #define RSTH_R LGUI_T(KC_R)
 #define RSTH_S LALT_T(KC_S)
@@ -86,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB  , KC_Q ,  KC_W   ,  KC_F  ,   KC_P ,   KC_B ,                                        KC_J , KC_L   ,  KC_U  ,   KC_Y ,KC_SCLN, XXXXXXX,
      KC_ESC  ,HOME_A,  HOME_R , HOME_S ,  HOME_T,  HOME_G,                                       HOME_M, HOME_N ,HOME_E  ,HOME_I  ,HOME_O , KC_QUOT,
      XXXXXXX , KC_Z ,  KC_X   ,  KC_C  ,   KC_D ,   KC_V , XXXXXXX,XXXXXXX,   XXXXXXX, XXXXXXX,   KC_K ,   KC_H ,KC_COMM , KC_DOT ,KC_SLSH, XXXXXXX,
-                                XXXXXXX, XXXXXXX, KC_NMBR, BSPC   ,DEL    ,     ENTER,  SPACE , KC_TMUX, XXXXXXX,XXXXXXX
+                                XXXXXXX, XXXXXXX,     TAB, BSPC   ,DEL    ,     ENTER,  SPACE , KC_TMUX, XXXXXXX,XXXXXXX
     ),
 
 
