@@ -269,7 +269,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
       register_mods(mod_config(MOD_LCTL));
       register_code(KC_B);
-    } else {
       unregister_mods(mod_config(MOD_LCTL));
       unregister_code(KC_B);
     }
