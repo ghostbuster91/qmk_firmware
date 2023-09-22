@@ -267,10 +267,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return false;
   case KC_TMUX:
     if (record->event.pressed) {
-      register_mods(mod_config(MOD_LCTL));
-      register_code(KC_B);
-      unregister_mods(mod_config(MOD_LCTL));
-      unregister_code(KC_B);
+        tap_code16(LCTL(KC_B));;
     }
     return false;
   }
