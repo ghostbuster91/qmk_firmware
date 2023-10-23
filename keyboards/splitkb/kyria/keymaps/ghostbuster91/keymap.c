@@ -374,6 +374,15 @@ bool oled_task_user(void) {
                  false);
     oled_write_P(led_usb_state.scroll_lock ? PSTR("SCRLCK ") : PSTR("       "),
                  false);
+    oled_write_P("\n", false);
+
+    bool caps_word_state = is_caps_word_on();
+    uint8_t mods = get_oneshot_mods();
+    oled_write_P(caps_word_state ? PSTR("W "): PSTR("  "), false);
+    oled_write_P(mods & MOD_MASK_GUI ? PSTR("G "): PSTR("  "), false);
+    oled_write_P(mods & MOD_MASK_ALT ? PSTR("A "): PSTR("  "), false);
+    oled_write_P(mods & MOD_MASK_SHIFT ? PSTR("S "): PSTR("  "), false);
+    oled_write_P(mods & MOD_MASK_CTRL ? PSTR("C "): PSTR("  "), false);
   } else {
     // clang-format off
         static const char PROGMEM kyria_logo[] = {
